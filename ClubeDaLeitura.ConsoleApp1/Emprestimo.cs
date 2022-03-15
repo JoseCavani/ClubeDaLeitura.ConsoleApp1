@@ -32,7 +32,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                 {
                     Console.WriteLine("qual revista deseja emprestar");
 
-                } while (!(int.TryParse(Console.ReadLine(), out numeroRevista)) || revistas[numeroRevista] == null|| revistas[numeroRevista].disponivel == false);
+                } while (!(int.TryParse(Console.ReadLine(), out numeroRevista)) || revistas[    numeroRevista] == null|| revistas[numeroRevista].disponivel == false);
                 revista = revistas[numeroRevista];
 
 

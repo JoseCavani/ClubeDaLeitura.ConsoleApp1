@@ -15,8 +15,9 @@ namespace ClubeDaLeitura.ConsoleApp1
                     Console.WriteLine("1 = Revista\n" +
                         "2 = Caixa\n" +
                         "3 = Pessoas\n" +
-                        "4 = Emprestimos\n");
-                } while (!(int.TryParse(Console.ReadLine(), out numero))|| numero > 4 || numero <0);
+                        "4 = Emprestimos\n" +
+                        "5 = sair\n");
+                } while (!(int.TryParse(Console.ReadLine(), out numero))|| numero > 5 || numero <0);
                return numero;
             }
             public int MenuSecundarioGeral()
@@ -38,11 +39,11 @@ namespace ClubeDaLeitura.ConsoleApp1
                 while (!(int.TryParse(Console.ReadLine(), out numero)) || numero > 5 || numero < 0) ;
                 return numero;
             }
-            public int Editar(string mensagen, dynamic[] objeto)
+            public int Editar(dynamic[] objeto)
             {
                 do
                 {
-                    Console.WriteLine(mensagen);
+                    Console.WriteLine("qual o ID que deseja editar");
                 } while (!(int.TryParse(Console.ReadLine(), out numeroEditar)) || objeto[numeroEditar] == null);
                 return numeroEditar;
             }

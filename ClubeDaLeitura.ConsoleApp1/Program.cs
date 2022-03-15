@@ -136,6 +136,8 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 break;
                         }
                         break;
+                    case 5:
+                        return;
                     default:
                         mensagen.Erro("invalido");
                         break;
@@ -180,7 +182,7 @@ namespace ClubeDaLeitura.ConsoleApp1
         private static void Editar(Menu menu, dynamic[] objeto)
         {
             Mostrar(objeto);
-            int numeroEditar = menu.Editar("qual o ID  que deseja editar", objeto);
+            int numeroEditar = menu.Editar(objeto);
             Console.Clear();
             objeto[numeroEditar].Editar();
         }
@@ -199,7 +201,7 @@ namespace ClubeDaLeitura.ConsoleApp1
         private static void EditarRevista(Menu menu, Revista[] revista, Caixa[] caixa)
         {
             Mostrar(revista);
-            int numeroEditar = menu.Editar("qual o ID da Revista que deseja editar", revista);
+            int numeroEditar = menu.Editar(revista);
             Console.Clear();
             revista[numeroEditar].EditarRevista(caixa);
         }
