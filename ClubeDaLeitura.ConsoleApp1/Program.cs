@@ -227,7 +227,7 @@ namespace ClubeDaLeitura.ConsoleApp1
         {
             int posicao = acharPosicao.AcharPosicaoParaOObjeto(revista);
             revista[posicao] = new();
-            revista[posicao].RegistarRevista(caixa);
+            revista[posicao].Registar(caixa);
         }
 
         private static void Mostrar(dynamic[] objeto)

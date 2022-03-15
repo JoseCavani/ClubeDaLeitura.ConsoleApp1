@@ -13,7 +13,7 @@ namespace ClubeDaLeitura.ConsoleApp1
             public Mensagen mensagens = new();
             public Menu menu = new();
 
-            public void RegistarRevista(Caixa[] caixa)
+            public void Registar(Caixa[] caixa)
             {
                 disponivel = true;
                 Console.WriteLine("tipo de colecao");
