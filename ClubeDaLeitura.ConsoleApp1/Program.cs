@@ -218,14 +218,20 @@ namespace ClubeDaLeitura.ConsoleApp1
                 if (item == null)
                     continue;
                 if (item.nome == emprestimo[posicaoExluir].amigo.nome)
+                {
                     item.temEmprestimo = false;
+                    break;
+                }
             }
             foreach (var item in revistas)
             {
                 if (item == null)
                     continue;
                 if (item.numeroEdicao == emprestimo[posicaoExluir].revista.numeroEdicao)
+                {
                     item.disponivel = true;
+                    break;
+                }
             }
             mensagen.Sucesso("fechado com sucesso");
             
