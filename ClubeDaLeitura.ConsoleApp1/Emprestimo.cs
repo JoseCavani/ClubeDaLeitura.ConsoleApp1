@@ -44,7 +44,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                     houveErro = true;
                 } while (!(int.TryParse(Console.ReadLine(), out numeroRevista)) || revistas[    numeroRevista] == null|| revistas[numeroRevista].disponivel == false);
                 revista = revistas[numeroRevista];
-
+                revistas[numeroRevista].disponivel = false;
 
 
 
@@ -59,8 +59,9 @@ namespace ClubeDaLeitura.ConsoleApp1
                 houveErro = false;
                 do
                 {
+                    Console.WriteLine();
                     if (houveErro == true)
-                        mensagen.Erro("data invalida");
+                        mensagen.Erro("pessoa ja tem emprestimo ou nao existe");
                     Console.WriteLine("qual pessoa quer emprestar");
                     houveErro = true;
 

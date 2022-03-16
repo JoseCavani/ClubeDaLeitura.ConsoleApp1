@@ -122,7 +122,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 MostrarEmprestimos(emprestimos,true);
                                 break;
                             case 3:
-                                Excluir(emprestimos, mensagen);
+                                ExcluirEmprestimo(emprestimos, mensagen, pessoas, revistas);
                                 break;
                             case 4:
                                Editar(menu, emprestimos);
@@ -168,9 +168,9 @@ namespace ClubeDaLeitura.ConsoleApp1
                         continue;
                     Console.WriteLine($"ID : {i}");
                     emprestimos[i].Mostrar();
-                    Console.ReadKey();
                 }
             }
+            Console.ReadKey();
         }
 
         private static void RegistraEmprestimos(Revista[] revistas, Pessoa[] pessoas, AcharPosicao acharPosicao, Emprestimo[] emprestimos)
@@ -206,21 +206,39 @@ namespace ClubeDaLeitura.ConsoleApp1
             Console.Clear();
             revista[numeroEditar].EditarRevista(caixa);
         }
+        private static void ExcluirEmprestimo(Emprestimo[] emprestimo, Mensagen mensagen,Pessoa[] pessoas,Revista[] revistas)
+        {
+            Mostrar(emprestimo);
+            int posicaoExluir = mensagen.Excluir(emprestimo, "qual o ID que deseja excluir");
 
+            emprestimo[posicaoExluir].aberto = false;
+            emprestimo[posicaoExluir].dataDevolucao = DateTime.Now;
+            foreach (var item in pessoas)
+            {
+                if (item == null)
+                    continue;
+                if (item.nome == emprestimo[posicaoExluir].amigo.nome)
+                    item.temEmprestimo = false;
+            }
+            foreach (var item in revistas)
+            {
+                if (item == null)
+                    continue;
+                if (item.numeroEdicao == emprestimo[posicaoExluir].revista.numeroEdicao)
+                    item.disponivel = true;
+            }
+            mensagen.Sucesso("fechado com sucesso");
+            
+        }
         private static void Excluir(dynamic[] objeto, Mensagen mensagen)
         {
             Mostrar(objeto);
             int posicaoExluir = mensagen.Excluir(objeto, "qual o ID que deseja excluir");
-            if (objeto is Emprestimo[])
-            {
-                objeto[posicaoExluir].aberto = false;
-                objeto[posicaoExluir].dataDevolucao = DateTime.Now;
-                mensagen.Sucesso("fechado com sucesso");
-            }
-            else {
+            
+         
                 objeto[posicaoExluir] = null;
                 mensagen.Sucesso("removido com sucesso");
-            }
+            
             Console.ReadKey();
         }
 
