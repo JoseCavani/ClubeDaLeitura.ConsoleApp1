@@ -25,11 +25,23 @@ namespace ClubeDaLeitura.ConsoleApp1
                 mensagen.Sucesso("caixa registrada com sucesso");
             }
 
-            public void Mostrar(int i)
+            public void Mostrar()
             {
-                Console.WriteLine($"Cor = {caixas[i].cor}\n" +
-                        $"Etiqueta = {caixas[i].etiqueta}\n" +
-                        $"Numero = {caixas[i].numero}\n");
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} ", "ID".PadRight(3, ' '), "cor".PadRight(16, ' '), "numero".PadRight(16, ' '), "etiqueta".PadRight(16, ' '));
+
+                Console.WriteLine("-------------------------------------------------------------------------------------------------------------------");
+
+                Console.ResetColor();
+
+                for (int i = 0; i < caixas.Length; i++)
+                {
+                    if (caixas[i] == null)
+                        continue;
+                    Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} ", i.ToString().PadRight(3, ' '), caixas[i].cor.PadRight(16, ' '), caixas[i].numero.ToString().PadRight(16, ' '), caixas[i].etiqueta.PadRight(16, ' '));
+                    Console.WriteLine();
+                }
             }
 
             public void Editar(int i)

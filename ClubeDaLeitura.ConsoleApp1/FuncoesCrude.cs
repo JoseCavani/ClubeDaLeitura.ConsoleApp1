@@ -6,33 +6,16 @@ namespace ClubeDaLeitura.ConsoleApp1
     {
         public class FuncoesCrude
         {
-            bool houveErro;
-            Mensagen mensagens = new Mensagen();
-            int posicao;
+           
             public void MostrarEmprestimos(GerenciadorEmprestimo gerenciadorEmprestimo, Emprestimo[] emprestimos, bool abertos)
             {
                 if (abertos)
                 {
-                    for (int i = 0; i < emprestimos.Length; i++)
-                    {
-                        if (emprestimos[i] == null || emprestimos[i].aberto == false)
-                            continue;
-                        Console.WriteLine($"ID : {i}");
-                        gerenciadorEmprestimo.Mostrar(i);
-                    }
+                        gerenciadorEmprestimo.Mostrar(true);
                 }
                 else
                 {
-                    for (int i = 0; i < emprestimos.Length; i++)
-                    {
-                        if (emprestimos[i] == null)
-                            continue;
-                        TimeSpan dias = DateTime.Today - emprestimos[i].dataEmprestimo;
-                        if (dias.Days > 30)
-                            continue;
-                        Console.WriteLine($"ID : {i}");
-                        gerenciadorEmprestimo.Mostrar(i);
-                    }
+                        gerenciadorEmprestimo.Mostrar(false);
                 }
                 Console.ReadKey();
             }
@@ -46,14 +29,14 @@ namespace ClubeDaLeitura.ConsoleApp1
 
             public void Editar(dynamic gerenciador,Menu menu, dynamic[] objeto)
             {
-                Mostrar(gerenciador,objeto);
+                Mostrar(gerenciador);
                 int numeroEditar = menu.EditarQual(objeto);
                 Console.Clear();
                 gerenciador.Editar(numeroEditar);
             }
             public void EditarEmprestimo(dynamic gerenciador, Menu menu, dynamic[] objeto, Pessoa[] pessoas, Revista[] revista)
             {
-                Mostrar(gerenciador, objeto);
+                Mostrar(gerenciador);
                 int numeroEditar = menu.EditarQual(objeto);
                 Console.Clear();
                 gerenciador.Editar(numeroEditar, revista, pessoas);
@@ -72,14 +55,17 @@ namespace ClubeDaLeitura.ConsoleApp1
 
             public void EditarRevista(GerenciadorRevista gerenciadorRevista, Menu menu, Revista[] revista, Caixa[] caixa)
             {
-                Mostrar(gerenciadorRevista, revista);
+                Mostrar(gerenciadorRevista);
                 int numeroEditar = menu.EditarQual(revista);
                 Console.Clear();
                 gerenciadorRevista.EditarRevista(caixa,numeroEditar);
             }
             public void ExcluirEmprestimo(GerenciadorCaixa gerenciadorCaixa, GerenciadorEmprestimo gerenciadorEmprestimo, Emprestimo[] emprestimo, Mensagen mensagen, Pessoa[] pessoas, Revista[] revistas)
             {
-                Mostrar(gerenciadorEmprestimo, emprestimo);
+                bool houveErro = false;
+                Mensagen mensagens = new Mensagen();
+                int posicao;
+                Mostrar(gerenciadorEmprestimo);
                 int posicaoExluir = mensagen.Excluir(emprestimo, "qual o ID que deseja excluir");
 
                 emprestimo[posicaoExluir].aberto = false;
@@ -97,7 +83,7 @@ namespace ClubeDaLeitura.ConsoleApp1
 
                 Console.Clear();
 
-                Mostrar(gerenciadorCaixa, gerenciadorCaixa.caixas);
+                Mostrar(gerenciadorCaixa);
                 do
                 {
                     if (houveErro == true)
@@ -125,7 +111,7 @@ namespace ClubeDaLeitura.ConsoleApp1
             }
             public void Excluir(dynamic gerenciador,dynamic[] objeto, Mensagen mensagen)
             {
-                Mostrar(gerenciador, objeto);
+                Mostrar(gerenciador);
                 int posicaoExluir = mensagen.Excluir(objeto, "qual o ID que deseja excluir");
 
 
@@ -142,16 +128,9 @@ namespace ClubeDaLeitura.ConsoleApp1
                 gerenciadorRevista.Registar(gerenciadorCaixa, posicao, caixa);
             }
 
-            public void Mostrar(dynamic gerenciador,dynamic[] objeto)
+            public void Mostrar(dynamic gerenciador)
             {
-                for (int i = 0; i < objeto.Length; i++)
-                {
-                    if (objeto[i] == null)
-                        continue;
-                    Console.WriteLine($"ID : {i}");
-                    gerenciador.Mostrar(i);
-                }
-
+                    gerenciador.Mostrar();
                 Console.ReadKey();
             }
         }

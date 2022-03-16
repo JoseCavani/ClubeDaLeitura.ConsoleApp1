@@ -20,13 +20,22 @@ namespace ClubeDaLeitura.ConsoleApp1
                 pessoas[i].endereço = Console.ReadLine();
                 mensagen.Sucesso("pessoa registrada com sucesso");
             }
-            public void Mostrar(int i)
+            public void Mostrar()
             {
-                Console.WriteLine($"telefone = { pessoas[i].telefone}\n" +
-                        $"nome do responsavel = { pessoas[i].nomeResponsavel}\n" +
-                        $"nome = { pessoas[i].nome}\n" +
-                        $"endereço = { pessoas[i].endereço}\n" +
-                        $"tem emprestimo? { pessoas[i].temEmprestimo}\n");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} | {4,0} | {5,0} ","ID".PadRight(3,' '), "telefone".PadRight(20, ' '), "nome do responsavel".PadRight(20, ' '), "nome".PadRight(20, ' '), "endereço".PadRight(20, ' '), "tem emprestimo?");
+
+                Console.WriteLine("-------------------------------------------------------------------------------------------------------------------");
+
+                Console.ResetColor();
+
+                for (int i = 0; i < pessoas.Length; i++)
+                {
+                    if (pessoas[i] == null)
+                        continue;
+                    Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} | {4,0} | {5,0} ",i.ToString().PadRight(3,' '), pessoas[i].telefone.PadRight(20, ' '), pessoas[i].nomeResponsavel.PadRight(20, ' '), pessoas[i].nome.PadRight(20, ' '), pessoas[i].endereço.PadRight(20, ' '), pessoas[i].temEmprestimo);
+                    Console.WriteLine();
+                }
             }
             public void Editar(int i)
             {

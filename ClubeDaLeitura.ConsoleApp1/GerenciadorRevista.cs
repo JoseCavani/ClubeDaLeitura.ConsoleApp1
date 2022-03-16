@@ -18,7 +18,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                 revistas[posicao].tipoColecao = Console.ReadLine();
                 Console.Clear();
 
-                funcaoCrude.Mostrar(gerenciadorCaixa,caixa);
+                funcaoCrude.Mostrar(gerenciadorCaixa);
 
                    revistas[posicao].houveErro = false;
                 do
@@ -44,13 +44,24 @@ namespace ClubeDaLeitura.ConsoleApp1
                 mensagens.Sucesso("Revista registrado com sucesso");
             }
 
-            public void Mostrar(int i)
+            public void Mostrar()
             {
-                Console.WriteLine($"Numero de edição = {revistas[i].numeroEdicao}\n" +
-                    $"ano = {revistas[i].ano}\n" +
-                    $"tipo de coleção = {revistas[i].tipoColecao}\n" +
-                    $"caixa da revista = {revistas[i].caixaDaRevista.numero}\n" +
-                    $"disponivel? = {revistas[i].disponivel}\n");
+              Console.ForegroundColor  = ConsoleColor.Green;
+                Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} | {4,0} |{5,0} ","ID".PadRight(3, ' '), "Numero de Edicao", "Ano".PadRight(16, ' '), "Tipo de coleção".PadRight(16, ' '), "numero da caixa".PadRight(16, ' '), "disponivel?");
+
+                Console.WriteLine("-------------------------------------------------------------------------------------------------------------------");
+
+                Console.ResetColor();
+
+                for (int i = 0; i < revistas.Length; i++)
+                {
+                    if (revistas[i] == null)
+                        continue;
+                    Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} | {4,0} |{5,0} ", i.ToString().PadRight(3,' ') ,revistas[i].numeroEdicao.PadRight(16, ' '), revistas[i].ano.ToString().PadRight(16, ' '), revistas[i].tipoColecao.PadRight(16, ' '), revistas[i].caixaDaRevista.numero.ToString().PadRight(16, ' '), revistas[i].disponivel);
+                    Console.WriteLine();
+                }
+
+               
             }
             public void EditarRevista(Caixa[] caixa,int numeroEditar)
             {

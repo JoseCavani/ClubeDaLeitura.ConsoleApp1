@@ -25,13 +25,13 @@ namespace ClubeDaLeitura.ConsoleApp1
                 } while (!(DateTime.TryParse(Console.ReadLine(), out emprestimos[posicao].dataEmprestimo)));
                 Console.Clear();
 
-                funcaoCrude.Mostrar(gerenciadorRevista,revistas);
+                funcaoCrude.Mostrar(gerenciadorRevista);
 
                   emprestimos[posicao].houveErro = false;
                 do
                 {
                     if (emprestimos[posicao].houveErro == true)
-                        mensagens.Erro("data invalida");
+                        mensagens.Erro("revista invalida");
                     Console.WriteLine("qual revista deseja emprestar");
                     emprestimos[posicao].houveErro = true;
                 } while (!(int.TryParse(Console.ReadLine(), out emprestimos[posicao].numeroRevista)) || revistas[emprestimos[posicao].numeroRevista] == null || revistas[emprestimos[posicao].numeroRevista].disponivel == false);
@@ -42,7 +42,7 @@ namespace ClubeDaLeitura.ConsoleApp1
 
                 Console.Clear();
 
-                funcaoCrude.Mostrar(gerenciadorPessoas, amigos);
+                funcaoCrude.Mostrar(gerenciadorPessoas);
 
                 emprestimos[posicao].houveErro = false;
                 do
@@ -60,15 +60,45 @@ namespace ClubeDaLeitura.ConsoleApp1
                 mensagens.Sucesso("registrado com sucesso");
             }
 
-            public void Mostrar(int posicao)
+            public void Mostrar(bool abertos)
             {
-                Console.WriteLine($"Data de emprestimo = {emprestimos[posicao].dataEmprestimo}\n" +
-                        $"revista numero de edicao = {emprestimos[posicao].revista.numeroEdicao}\n" +
-                        $"nome do amigo = {emprestimos[posicao].amigo.nome}\n" +
-                        $"emprestado ainda? = {emprestimos[posicao].aberto}\n");
-                if (emprestimos[posicao].aberto == false)
+               
+                if (abertos)
                 {
-                    Console.WriteLine($"data devolução {emprestimos[posicao].dataDevolucao}");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0}", "Data de emprestimo".PadRight(20, ' '), "revista numero de edicao".PadRight(30, ' '), "nome do amigo".PadRight(20, ' '), "emprestado ainda?".PadRight(20, ' '));
+
+                    Console.WriteLine("-------------------------------------------------------------------------------------------------------------------");
+
+                    Console.ResetColor();
+                    for (int i = 0; i < emprestimos.Length; i++)
+                    {
+                        if (emprestimos[i] == null || emprestimos[i].aberto == false)
+                            continue;
+                        Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0}  ", emprestimos[i].dataEmprestimo.ToShortDateString().ToString().PadRight(30, ' '), emprestimos[i].revista.numeroEdicao.PadRight(20, ' '), emprestimos[i].amigo.nome.PadRight(20, ' '), emprestimos[i].aberto.ToString().PadRight(20, ' '));
+
+                        Console.WriteLine();
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} | {4,0} ", "Data de emprestimo".PadRight(20, ' '), "revista numero de edicao".PadRight(20, ' '), "nome do amigo".PadRight(20, ' '), "emprestado ainda?".PadRight(20, ' '), "Data de devolução".PadRight(20, ' '));
+
+                    Console.WriteLine("-------------------------------------------------------------------------------------------------------------------");
+
+                    Console.ResetColor();
+                    for (int i = 0; i < emprestimos.Length; i++)
+                    {
+                        if (emprestimos[i] == null)
+                            continue;
+                        TimeSpan dias = DateTime.Today - emprestimos[i].dataEmprestimo;
+                        if (dias.Days > 30)
+                            continue;
+                        Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} | {4,0} ", emprestimos[i].dataEmprestimo.ToShortDateString().ToString().PadRight(20, ' '), emprestimos[i].revista.numeroEdicao.PadRight(20, ' '), emprestimos[i].amigo.nome.PadRight(20, ' '), emprestimos[i].aberto.ToString().PadRight(20, ' '), emprestimos[i].dataDevolucao);
+
+                        Console.WriteLine();
+                    }
                 }
             }
             public void Editar(int posicao,Revista[] revistas, Pessoa[] amigos)

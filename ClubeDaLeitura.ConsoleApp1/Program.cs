@@ -52,7 +52,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 funcaoCrude.RegistrarNovaRevista(gerenciadorCaixa, gerenciadorRevista, gerenciadorRevista.revistas, gerenciadorCaixa.caixas, acharPosicao);
                                 break;
                             case 2:
-                                funcaoCrude.Mostrar(gerenciadorRevista, gerenciadorRevista.revistas);
+                                funcaoCrude.Mostrar(gerenciadorRevista);
                                 break;
                             case 3:
                                 funcaoCrude.Excluir(gerenciadorRevista, gerenciadorRevista.revistas, mensagen);
@@ -75,7 +75,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 funcaoCrude.Registrar(gerenciadorCaixa,gerenciadorCaixa.caixas, acharPosicao);
                                 break;
                             case 2:
-                                funcaoCrude.Mostrar(gerenciadorCaixa, gerenciadorCaixa.caixas);
+                                funcaoCrude.Mostrar(gerenciadorCaixa);
                                 break;
                             case 3:
                                 funcaoCrude.Excluir(gerenciadorCaixa, gerenciadorCaixa.caixas, mensagen);
@@ -98,7 +98,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 funcaoCrude.Registrar(gerenciadorPessoas, gerenciadorPessoas.pessoas, acharPosicao);
                                 break;
                             case 2:
-                                funcaoCrude.Mostrar(gerenciadorPessoas, gerenciadorPessoas.pessoas);
+                                funcaoCrude.Mostrar(gerenciadorPessoas);
                                 break;
                             case 3:
                                 funcaoCrude.Excluir(gerenciadorPessoas, gerenciadorPessoas.pessoas, mensagen);
