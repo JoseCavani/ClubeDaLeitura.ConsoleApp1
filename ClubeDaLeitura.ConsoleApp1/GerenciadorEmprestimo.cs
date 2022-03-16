@@ -9,6 +9,7 @@ namespace ClubeDaLeitura.ConsoleApp1
             public Emprestimo[] emprestimos = new Emprestimo[100];
             Menu menu = new();
             private Mensagen mensagens = new();
+            FuncoesCrude funcaoCrude = new();
             public void Registrar(GerenciadorPessoa gerenciadorPessoas, GerenciadorRevista gerenciadorRevista, Revista[] revistas, Pessoa[] amigos,int posicao)
             {
                 emprestimos[posicao].houveErro = false;
@@ -23,14 +24,10 @@ namespace ClubeDaLeitura.ConsoleApp1
                     emprestimos[posicao].houveErro = true;
                 } while (!(DateTime.TryParse(Console.ReadLine(), out emprestimos[posicao].dataEmprestimo)));
                 Console.Clear();
-                for (int i = 0; i < revistas.Length; i++)
-                {
-                    if (revistas[i] == null || revistas[i].disponivel == false)
-                        continue;
-                    Console.WriteLine($"ID : {i}");
-                    gerenciadorRevista.Mostrar(i);
-                }
-                emprestimos[posicao].houveErro = false;
+
+                funcaoCrude.Mostrar(gerenciadorRevista,revistas);
+
+                  emprestimos[posicao].houveErro = false;
                 do
                 {
                     if (emprestimos[posicao].houveErro == true)
@@ -44,13 +41,9 @@ namespace ClubeDaLeitura.ConsoleApp1
 
 
                 Console.Clear();
-                for (int i = 0; i < amigos.Length; i++)
-                {
-                    if (amigos[i] == null)
-                        continue;
-                    Console.WriteLine($"ID : {i}");
-                    gerenciadorPessoas.Mostrar(i);
-                }
+
+                funcaoCrude.Mostrar(gerenciadorPessoas, amigos);
+
                 emprestimos[posicao].houveErro = false;
                 do
                 {

@@ -9,7 +9,7 @@ namespace ClubeDaLeitura.ConsoleApp1
             public Revista[] revistas = new Revista[100];
             public Mensagen mensagens = new();
             public Menu menu = new();
-            AcharPosicao acharPosicao = new();
+            FuncoesCrude funcaoCrude = new();
             public void Registar(GerenciadorCaixa gerenciadorCaixa, int posicao,Caixa[] caixa)
             {
               
@@ -17,15 +17,10 @@ namespace ClubeDaLeitura.ConsoleApp1
                 Console.WriteLine("tipo de colecao");
                 revistas[posicao].tipoColecao = Console.ReadLine();
                 Console.Clear();
-                for (int i = 0; i < caixa.Length; i++)
-                {
-                    if (caixa[i] == null)
-                        continue;
-                    Console.WriteLine($"ID : {i}");
-                    gerenciadorCaixa.Mostrar(i);
-                    Console.WriteLine();
-                }
-                revistas[posicao].houveErro = false;
+
+                funcaoCrude.Mostrar(gerenciadorCaixa,caixa);
+
+                   revistas[posicao].houveErro = false;
                 do
                 {
                     if (revistas[posicao].houveErro != false)

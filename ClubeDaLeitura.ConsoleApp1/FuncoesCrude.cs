@@ -6,6 +6,9 @@ namespace ClubeDaLeitura.ConsoleApp1
     {
         public class FuncoesCrude
         {
+            bool houveErro;
+            Mensagen mensagens = new Mensagen();
+            int posicao;
             public void MostrarEmprestimos(GerenciadorEmprestimo gerenciadorEmprestimo, Emprestimo[] emprestimos, bool abertos)
             {
                 if (abertos)
@@ -74,7 +77,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                 Console.Clear();
                 gerenciadorRevista.EditarRevista(caixa,numeroEditar);
             }
-            public void ExcluirEmprestimo(GerenciadorEmprestimo gerenciadorEmprestimo, Emprestimo[] emprestimo, Mensagen mensagen, Pessoa[] pessoas, Revista[] revistas)
+            public void ExcluirEmprestimo(GerenciadorCaixa gerenciadorCaixa, GerenciadorEmprestimo gerenciadorEmprestimo, Emprestimo[] emprestimo, Mensagen mensagen, Pessoa[] pessoas, Revista[] revistas)
             {
                 Mostrar(gerenciadorEmprestimo, emprestimo);
                 int posicaoExluir = mensagen.Excluir(emprestimo, "qual o ID que deseja excluir");
@@ -91,6 +94,20 @@ namespace ClubeDaLeitura.ConsoleApp1
                         break;
                     }
                 }
+
+                Console.Clear();
+
+                Mostrar(gerenciadorCaixa, gerenciadorCaixa.caixas);
+                do
+                {
+                    if (houveErro == true)
+                        mensagens.Erro("ID invalido");
+                    Console.WriteLine("ID da caixa para colocar a revista");
+                    houveErro = true;
+                } while (!(int.TryParse(Console.ReadLine(), out posicao)));
+
+                Console.Clear();
+
                 foreach (var item in revistas)
                 {
                     if (item == null)
@@ -98,10 +115,12 @@ namespace ClubeDaLeitura.ConsoleApp1
                     if (item.numeroEdicao == emprestimo[posicaoExluir].revista.numeroEdicao)
                     {
                         item.disponivel = true;
+                        item.caixaDaRevista = gerenciadorCaixa.caixas[posicao];
                         break;
                     }
                 }
                 mensagen.Sucesso("fechado com sucesso");
+                Console.Clear();
 
             }
             public void Excluir(dynamic gerenciador,dynamic[] objeto, Mensagen mensagen)
