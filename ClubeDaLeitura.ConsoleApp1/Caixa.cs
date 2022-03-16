@@ -5,17 +5,18 @@ namespace ClubeDaLeitura.ConsoleApp1
     {
         public class Caixa
         {
-            public string cor,etiqueta;
+            public string cor, etiqueta;
             public int numero;
-             int numeroEditar;
+            int numeroEditar;
             Mensagen mensagen = new();
             bool houveErro = false;
+            Menu menu = new();
             public void Registrar()
             {
                 Console.WriteLine("cor");
-                    cor = Console.ReadLine();
+                cor = Console.ReadLine();
                 Console.WriteLine("etiqueta");
-                    etiqueta = Console.ReadLine();
+                etiqueta = Console.ReadLine();
                 houveErro = false;
                 do
                 {
@@ -37,12 +38,12 @@ namespace ClubeDaLeitura.ConsoleApp1
 
             public void Editar()
             {
-                do
-                {
-                    Console.WriteLine($"cor = 1\n" +
+
+                numeroEditar = menu.EditarOQue($"cor = 1\n" +
                               $"numero = 2\n" +
-                              $"etiqueta = 3\n");
-                } while (!(int.TryParse(Console.ReadLine(), out numeroEditar)) || numeroEditar > 3 || numeroEditar < 0);
+                              $"etiqueta = 3\n" +
+                              $"voltar = 4\n", 4);
+
                 switch (numeroEditar)
                 {
                     case 1:
@@ -50,9 +51,13 @@ namespace ClubeDaLeitura.ConsoleApp1
                         cor = Console.ReadLine();
                         break;
                     case 2:
+                        houveErro = false;
                         do
                         {
+                            if (houveErro)
+                                mensagen.Erro("numero invalido");
                             Console.WriteLine("numero");
+                            houveErro = true;
                         } while (!(int.TryParse(Console.ReadLine(), out numero)));
                         break;
                     case 3:
@@ -63,7 +68,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                 mensagen.Sucesso("caixa editada com sucesso");
             }
         }
-        }
     }
+}
 
 

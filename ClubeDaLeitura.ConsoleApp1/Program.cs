@@ -39,7 +39,8 @@ namespace ClubeDaLeitura.ConsoleApp1
 
             #endregion
 
-            do {
+            do
+            {
                 Console.Clear();
                 switch (menu.MenuPrincipal())
                 {
@@ -77,7 +78,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 funcaoCrude.Mostrar(caixas);
                                 break;
                             case 3:
-                                funcaoCrude.Excluir(caixas,mensagen);
+                                funcaoCrude.Excluir(caixas, mensagen);
                                 break;
                             case 4:
                                 funcaoCrude.Editar(menu, caixas);
@@ -120,7 +121,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 funcaoCrude.RegistraEmprestimos(revistas, pessoas, acharPosicao, emprestimos);
                                 break;
                             case 2:
-                                funcaoCrude.MostrarEmprestimos(emprestimos,true);
+                                funcaoCrude.MostrarEmprestimos(emprestimos, true);
                                 break;
                             case 3:
                                 funcaoCrude.ExcluirEmprestimo(emprestimos, mensagen, pessoas, revistas);
@@ -144,7 +145,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                         mensagen.Erro("invalido");
                         break;
                 }
-            }while (true);
+            } while (true);
         }
     }
 }

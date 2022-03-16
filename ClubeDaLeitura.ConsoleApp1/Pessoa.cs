@@ -6,9 +6,10 @@ namespace ClubeDaLeitura.ConsoleApp1
         public class Pessoa
         {
             Mensagen mensagen = new();
+            Menu menu = new Menu();
             int numeroEditar;
             public string telefone, nomeResponsavel, nome, endereço;
-           public bool temEmprestimo;
+            public bool temEmprestimo;
             public void Registrar()
             {
                 Console.WriteLine("telefone");
@@ -30,13 +31,13 @@ namespace ClubeDaLeitura.ConsoleApp1
             }
             public void Editar()
             {
-                do
-                {
-                    Console.WriteLine($"telefone = 1\n" +
-                              $"nome do responsavel = 2\n" +
-                              $"nome = 3\n" +
-                              $"endereço = 4\n");
-                } while (!(int.TryParse(Console.ReadLine(), out numeroEditar)) || numeroEditar > 4 || numeroEditar < 0);
+
+                numeroEditar = menu.EditarOQue($"telefone = 1\n" +
+                          $"nome do responsavel = 2\n" +
+                          $"nome = 3\n" +
+                          $"endereço = 4\n" +
+                          $"5 = voltar\n", 5);
+
                 switch (numeroEditar)
                 {
                     case 1:
@@ -55,6 +56,8 @@ namespace ClubeDaLeitura.ConsoleApp1
                         Console.WriteLine("endereço");
                         endereço = Console.ReadLine();
                         break;
+                    case 5:
+                        return;
                 }
                 mensagen.Sucesso("pessoa editada com sucesso");
             }

@@ -24,8 +24,8 @@ namespace ClubeDaLeitura.ConsoleApp1
                     {
                         if (emprestimos[i] == null)
                             continue;
-                        TimeSpan diff = DateTime.Today - emprestimos[i].dataEmprestimo;
-                        if (diff.Days > 30)
+                        TimeSpan dias = DateTime.Today - emprestimos[i].dataEmprestimo;
+                        if (dias.Days > 30)
                             continue;
                         Console.WriteLine($"ID : {i}");
                         emprestimos[i].Mostrar();
@@ -129,6 +129,6 @@ namespace ClubeDaLeitura.ConsoleApp1
                 Console.ReadKey();
             }
         }
-      
+
     }
 }

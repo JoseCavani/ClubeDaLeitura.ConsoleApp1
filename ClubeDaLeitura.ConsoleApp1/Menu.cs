@@ -10,7 +10,7 @@ namespace ClubeDaLeitura.ConsoleApp1
             int numero;
             Mensagen mensagen = new Mensagen();
             bool houveErro = false;
-            public int MenuPrincipal() 
+            public int MenuPrincipal()
             {
                 houveErro = false;
                 do
@@ -23,8 +23,8 @@ namespace ClubeDaLeitura.ConsoleApp1
                         "4 = Emprestimos\n" +
                         "5 = sair\n");
                     houveErro = true;
-                } while (!(int.TryParse(Console.ReadLine(), out numero))|| numero > 5 || numero <0);
-               return numero;
+                } while (!(int.TryParse(Console.ReadLine(), out numero)) || numero > 5 || numero < 0);
+                return numero;
             }
             public int MenuSecundarioGeral()
             {
@@ -40,7 +40,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                         "5 = voltar\n");
                     houveErro = true;
                 }
-                while (!(int.TryParse(Console.ReadLine(), out numero)) || numero > 4 || numero < 0);
+                while (!(int.TryParse(Console.ReadLine(), out numero)) || numero > 5 || numero < 0);
                 return numero;
             }
             public int MenuSecundarioEmprestimo()
@@ -63,7 +63,7 @@ namespace ClubeDaLeitura.ConsoleApp1
             }
             public int Editar(dynamic[] objeto)
             {
-                 houveErro = false;
+                houveErro = false;
                 do
                 {
                     if (houveErro == true)
@@ -71,6 +71,18 @@ namespace ClubeDaLeitura.ConsoleApp1
                     Console.WriteLine("qual o ID que deseja editar");
                     houveErro = true;
                 } while (!(int.TryParse(Console.ReadLine(), out numeroEditar)) || objeto[numeroEditar] == null);
+                return numeroEditar;
+            }
+            public int EditarOQue(string mensagenInformativa, int numeroMaximo)
+            {
+                houveErro = false;
+                do
+                {
+                    if (houveErro == true)
+                        mensagen.Erro("ID invalido");
+                    Console.WriteLine(mensagenInformativa);
+                    houveErro = true;
+                } while (!(int.TryParse(Console.ReadLine(), out numeroEditar)) || numeroEditar > numeroMaximo || numeroEditar <= 0);
                 return numeroEditar;
             }
         }

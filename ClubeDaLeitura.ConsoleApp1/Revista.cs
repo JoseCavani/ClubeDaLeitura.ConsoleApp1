@@ -7,8 +7,8 @@ namespace ClubeDaLeitura.ConsoleApp1
         public class Revista
         {
             public bool disponivel;
-            public int numeroCaixa, numeroEditar,ano;
-            public string tipoColecao,  numeroEdicao;
+            public int numeroCaixa, numeroEditar, ano;
+            public string tipoColecao, numeroEdicao;
             public Caixa caixaDaRevista;
             public Mensagen mensagens = new();
             public Menu menu = new();
@@ -25,19 +25,20 @@ namespace ClubeDaLeitura.ConsoleApp1
                     if (caixa[i] == null)
                         continue;
                     Console.WriteLine($"ID : {i}");
-                        caixa[i].Mostrar();
+                    caixa[i].Mostrar();
                     Console.WriteLine();
                 }
-                 houveErro = false;
-                do {
+                houveErro = false;
+                do
+                {
                     if (houveErro != false)
                         mensagens.Erro("caixa invalida ou nao existe");
-                        Console.WriteLine("qual caixa deseja registrar para essa revista");
+                    Console.WriteLine("qual caixa deseja registrar para essa revista");
                     houveErro = true;
 
-                    } while (!(int.TryParse(Console.ReadLine(), out numeroCaixa))|| caixa[numeroCaixa] == null);
-                    caixaDaRevista = caixa[numeroCaixa];
-                 houveErro = false;
+                } while (!(int.TryParse(Console.ReadLine(), out numeroCaixa)) || caixa[numeroCaixa] == null);
+                caixaDaRevista = caixa[numeroCaixa];
+                houveErro = false;
                 do
                 {
                     if (houveErro == true)
@@ -53,21 +54,22 @@ namespace ClubeDaLeitura.ConsoleApp1
 
             public void Mostrar()
             {
-                    Console.WriteLine($"Numero de edição = {numeroEdicao}\n" +
-                        $"ano = {ano}\n" +
-                        $"tipo de coleção = {tipoColecao}\n" +
-                        $"caixa da revista = {caixaDaRevista.numero}\n" +
-                        $"disponivel? = {disponivel}\n");
+                Console.WriteLine($"Numero de edição = {numeroEdicao}\n" +
+                    $"ano = {ano}\n" +
+                    $"tipo de coleção = {tipoColecao}\n" +
+                    $"caixa da revista = {caixaDaRevista.numero}\n" +
+                    $"disponivel? = {disponivel}\n");
             }
             public void EditarRevista(Caixa[] caixa)
             {
-                do
-                {
-                    Console.WriteLine($"Numero de edição = 1\n" +
-                              $"ano = 2\n" +
-                              $"tipo de coleção = 3\n" +
-                              $"caixa da revista = 4\n");
-                } while (!(int.TryParse(Console.ReadLine(), out numeroEditar))|| numeroEditar>4 || numeroEditar<0);
+
+                numeroEditar = menu.EditarOQue($"Numero de edição = 1\n" +
+                          $"ano = 2\n" +
+                          $"tipo de coleção = 3\n" +
+                          $"caixa da revista = 4\n" +
+                          $"voltar = 5\n", 5);
+
+
                 switch (numeroEditar)
                 {
                     case 1:
@@ -75,9 +77,13 @@ namespace ClubeDaLeitura.ConsoleApp1
                         numeroEdicao = Console.ReadLine();
                         break;
                     case 2:
+                        houveErro = false;
                         do
                         {
+                            if (houveErro)
+                                mensagens.Erro("ano invalido");
                             Console.WriteLine("ano");
+                            houveErro = true;
                         } while (!(int.TryParse(Console.ReadLine(), out ano)));
                         break;
                     case 3:
@@ -91,13 +97,18 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 continue;
                             Console.WriteLine($"caixa {caixa[i].numero}, {caixa[i].cor},{caixa[i].etiqueta} = {i}");
                         }
+                        houveErro = false;
                         do
                         {
+                            if (houveErro)
+                                mensagens.Erro("caixa invalida");
                             Console.WriteLine("qual caixa deseja registrar para essa revista");
-
+                            houveErro = true;
                         } while (!(int.TryParse(Console.ReadLine(), out numeroCaixa)) || caixa[numeroCaixa] == null);
                         caixaDaRevista = caixa[numeroCaixa];
                         break;
+                    case 5:
+                        return;
                 }
                 mensagens.Sucesso("Revista editado com sucesso");
             }
