@@ -26,6 +26,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                 pessoas[i].nome = Console.ReadLine();
                 Console.WriteLine("endereço");
                 pessoas[i].endereço = Console.ReadLine();
+                mensagen.Sucesso("pessoa registrada com sucesso");
             }
             public void Mostrar(int i)
             {
@@ -33,7 +34,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                         $"nome do responsavel = { pessoas[i].nomeResponsavel}\n" +
                         $"nome = { pessoas[i].nome}\n" +
                         $"endereço = { pessoas[i].endereço}\n" +
-                        $"tem emprestimo? { pessoas[i].temEmprestimo}");
+                        $"tem emprestimo? { pessoas[i].temEmprestimo}\n");
             }
             public void Editar(int i)
             {

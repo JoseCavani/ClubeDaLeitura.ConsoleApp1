@@ -21,8 +21,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                        mensagen.Erro("numero invalido");
                     Console.WriteLine("numero");
                     caixas[i].houveErro = true;
-                } while (!(int.TryParse(Console.ReadLine(), out int numero)));
-                caixas[i].numero = int.Parse(Console.ReadLine());
+                } while (!(int.TryParse(Console.ReadLine(), out caixas[i].numero)));
                 mensagen.Sucesso("caixa registrada com sucesso");
             }
 
