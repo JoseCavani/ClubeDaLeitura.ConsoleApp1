@@ -10,42 +10,50 @@ namespace ClubeDaLeitura.ConsoleApp1
             public bool aberto;
             public Revista revista;
             public Pessoa amigo;
-            int numeroRevista, numeroPessoa, numeroEditar;
-            private Mensagen mensagens = new();
-            bool houveErro = false;
-            Menu menu = new();
+          public  int numeroRevista, numeroPessoa, numeroEditar;
+         
+          public  bool houveErro = false;
+         
 
-            public void Registrar(Revista[] revistas, Pessoa[] amigos)
+      
+
+        }
+        public class GerenciadorEmprestimo
+        {
+            public Emprestimo[] emprestimos = new Emprestimo[100];
+            Menu menu = new();
+            private Mensagen mensagens = new();
+            public void Registrar(GerenciadorPessoa gerenciadorPessoas, GerenciadorRevista gerenciadorRevista, Revista[] revistas, Pessoa[] amigos,int posicao)
             {
-                houveErro = false;
-                aberto = true;
+                emprestimos[posicao].houveErro = false;
+                emprestimos[posicao].aberto = true;
                 do
                 {
                     Console.Clear();
 
-                    if (houveErro == true)
+                    if (emprestimos[posicao].houveErro == true)
                         mensagens.Erro("data invalida");
                     Console.WriteLine("data do emprestimo");
-                    houveErro = true;
-                } while (!(DateTime.TryParse(Console.ReadLine(), out dataEmprestimo)));
+                    emprestimos[posicao].houveErro = true;
+                } while (!(DateTime.TryParse(Console.ReadLine(), out emprestimos[posicao].dataEmprestimo)));
                 Console.Clear();
                 for (int i = 0; i < revistas.Length; i++)
                 {
                     if (revistas[i] == null || revistas[i].disponivel == false)
                         continue;
                     Console.WriteLine($"ID : {i}");
-                    revistas[i].Mostrar();
+                    gerenciadorRevista.Mostrar(i);
                 }
-                houveErro = false;
+                emprestimos[posicao].houveErro = false;
                 do
                 {
-                    if (houveErro == true)
+                    if (emprestimos[posicao].houveErro == true)
                         mensagens.Erro("data invalida");
                     Console.WriteLine("qual revista deseja emprestar");
-                    houveErro = true;
-                } while (!(int.TryParse(Console.ReadLine(), out numeroRevista)) || revistas[numeroRevista] == null || revistas[numeroRevista].disponivel == false);
-                revista = revistas[numeroRevista];
-                revistas[numeroRevista].disponivel = false;
+                    emprestimos[posicao].houveErro = true;
+                } while (!(int.TryParse(Console.ReadLine(), out emprestimos[posicao].numeroRevista)) || revistas[emprestimos[posicao].numeroRevista] == null || revistas[emprestimos[posicao].numeroRevista].disponivel == false);
+                 emprestimos[posicao].revista = revistas[emprestimos[posicao].numeroRevista];
+                revistas[emprestimos[posicao].numeroRevista].disponivel = false;
 
 
 
@@ -55,55 +63,55 @@ namespace ClubeDaLeitura.ConsoleApp1
                     if (amigos[i] == null)
                         continue;
                     Console.WriteLine($"ID : {i}");
-                    amigos[i].Mostrar();
+                    gerenciadorPessoas.Mostrar(i);
                 }
-                houveErro = false;
+                emprestimos[posicao].houveErro = false;
                 do
                 {
                     Console.WriteLine();
-                    if (houveErro == true)
+                    if (emprestimos[posicao].houveErro == true)
                         mensagens.Erro("pessoa ja tem emprestimo ou nao existe");
                     Console.WriteLine("qual pessoa quer emprestar");
-                    houveErro = true;
+                    emprestimos[posicao].houveErro = true;
 
-                } while (!(int.TryParse(Console.ReadLine(), out numeroPessoa)) || amigos[numeroPessoa] == null || amigos[numeroPessoa].temEmprestimo == true);
-                amigo = amigos[numeroPessoa];
-                amigos[numeroPessoa].temEmprestimo = true;
+                } while (!(int.TryParse(Console.ReadLine(), out emprestimos[posicao].numeroPessoa)) || amigos[emprestimos[posicao].numeroPessoa] == null || amigos[emprestimos[posicao].numeroPessoa].temEmprestimo == true);
+                emprestimos[posicao].amigo = amigos[emprestimos[posicao].numeroPessoa];
+                amigos[emprestimos[posicao].numeroPessoa].temEmprestimo = true;
 
                 mensagens.Sucesso("registrado com sucesso");
             }
 
-            public void Mostrar()
+            public void Mostrar(int posicao)
             {
-                Console.WriteLine($"Data de emprestimo = {dataEmprestimo}\n" +
-                        $"revista numero de edicao = {revista.numeroEdicao}\n" +
-                        $"nome do amigo = {amigo.nome}\n" +
-                        $"emprestado ainda? = {aberto}\n");
-                if (aberto == false)
+                Console.WriteLine($"Data de emprestimo = {emprestimos[posicao].dataEmprestimo}\n" +
+                        $"revista numero de edicao = {emprestimos[posicao].revista.numeroEdicao}\n" +
+                        $"nome do amigo = {emprestimos[posicao].amigo.nome}\n" +
+                        $"emprestado ainda? = {emprestimos[posicao].aberto}\n");
+                if (emprestimos[posicao].aberto == false)
                 {
-                    Console.WriteLine($"data devolução {dataDevolucao}");
+                    Console.WriteLine($"data devolução {emprestimos[posicao].dataDevolucao}");
                 }
             }
-            public void Editar(Revista[] revistas, Pessoa[] amigos)
+            public void Editar(int posicao,Revista[] revistas, Pessoa[] amigos)
             {
-                numeroEditar = menu.EditarOQue($"data do emprestimo = 1\n" +
+                emprestimos[posicao].numeroEditar = menu.EditarOQue($"data do emprestimo = 1\n" +
                           $"revista = 2\n" +
                           $"pessoa = 3\n" +
                           $"data de Devolucao = 4\n" +
                           $"voltar = 5\n", 5);
 
 
-                switch (numeroEditar)
+                switch (emprestimos[posicao].numeroEditar)
                 {
                     case 1:
-                        houveErro = false;
+                        emprestimos[posicao].houveErro = false;
                         do
                         {
-                            if (houveErro)
+                            if (emprestimos[posicao].houveErro)
                                 mensagens.Erro("data invalida");
                             Console.WriteLine("data do emprestimo");
-                            houveErro = true;
-                        } while (!(DateTime.TryParse(Console.ReadLine(), out dataEmprestimo)));
+                            emprestimos[posicao].houveErro = true;
+                        } while (!(DateTime.TryParse(Console.ReadLine(), out emprestimos[posicao].dataEmprestimo)));
                         break;
                     case 2:
                         for (int i = 0; i < revistas.Length; i++)
@@ -112,16 +120,16 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 continue;
                             Console.WriteLine($"revista Tipo colecao: {revistas[i].tipoColecao}, ano: {revistas[i].ano}, numero de edicao{revistas[i].numeroEdicao} = {i}");
                         }
-                        houveErro = false;
+                        emprestimos[posicao].houveErro = false;
                         do
                         {
-                            if (houveErro)
+                            if (emprestimos[posicao].houveErro)
                                 mensagens.Erro("revista invalida");
                             Console.WriteLine("qual revista deseja emprestar");
-                            houveErro = true;
+                            emprestimos[posicao].houveErro = true;
 
-                        } while (!(int.TryParse(Console.ReadLine(), out numeroRevista)) || revistas[numeroRevista] == null || revistas[numeroRevista].disponivel == false);
-                        revista = revistas[numeroRevista];
+                        } while (!(int.TryParse(Console.ReadLine(), out emprestimos[posicao].numeroRevista)) || revistas[emprestimos[posicao].numeroRevista] == null || revistas[emprestimos[posicao].numeroRevista].disponivel == false);
+                        emprestimos[posicao].revista = revistas[emprestimos[posicao].numeroRevista];
 
 
                         break;
@@ -134,35 +142,34 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 continue;
                             Console.WriteLine($"pessoa nome: {amigos[i].nome}, telefone: {amigos[i].telefone}, endereço{amigos[i].endereço} = {i}");
                         }
-                        houveErro = false;
+                        emprestimos[posicao].houveErro = false;
                         do
                         {
-                            if (houveErro)
+                            if (emprestimos[posicao].houveErro)
                                 mensagens.Erro("pessoa invalida");
                             Console.WriteLine("qual pessoa quer emprestar");
-                            houveErro = true;
-                        } while (!(int.TryParse(Console.ReadLine(), out numeroPessoa)) || amigos[numeroPessoa] == null);
-                        amigo = amigos[numeroPessoa];
+                            emprestimos[posicao].houveErro = true;
+                        } while (!(int.TryParse(Console.ReadLine(), out emprestimos[posicao].numeroPessoa)) || amigos[emprestimos[posicao].numeroPessoa] == null);
+                        emprestimos[posicao].amigo = amigos[emprestimos[posicao].numeroPessoa];
                         break;
                     case 4:
-                        houveErro = false;
+                        emprestimos[posicao].houveErro = false;
                         do
                         {
-                            if (houveErro)
+                            if (emprestimos[posicao].houveErro)
                                 mensagens.Erro("data invalida");
                             Console.WriteLine("data do Devolucao");
-                            if (dataDevolucao == default)
+                            if (emprestimos[posicao].dataDevolucao == default)
                             {
                                 mensagens.Erro("item nao devolvido");
                                 break;
                             }
-                            houveErro = true;
-                        } while (!(DateTime.TryParse(Console.ReadLine(), out dataDevolucao)));
+                            emprestimos[posicao].houveErro = true;
+                        } while (!(DateTime.TryParse(Console.ReadLine(), out emprestimos[posicao].dataDevolucao)));
                         break;
                 }
                 mensagens.Sucesso("registrado com sucesso");
             }
-
         }
     }
 }

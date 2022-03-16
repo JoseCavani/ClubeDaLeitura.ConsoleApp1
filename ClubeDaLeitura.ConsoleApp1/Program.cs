@@ -9,33 +9,33 @@ namespace ClubeDaLeitura.ConsoleApp1
 
             #region variaveis
             Menu menu = new();
-            Revista[] revistas = new Revista[100];
-            Caixa[] caixas = new Caixa[100];
-            Pessoa[] pessoas = new Pessoa[100];
             AcharPosicao acharPosicao = new();
             Mensagen mensagen = new();
-            Emprestimo[] emprestimos = new Emprestimo[100];
             FuncoesCrude funcaoCrude = new();
+            GerenciadorRevista gerenciadorRevista = new();
+            GerenciadorCaixa gerenciadorCaixa = new();
+            GerenciadorPessoa gerenciadorPessoas = new();
+            GerenciadorEmprestimo gerenciadorEmprestimo = new();
             #endregion
 
             #region valores
-            caixas[0] = new();
-            caixas[0].cor = "verde";
-            caixas[0].numero = 1;
-            caixas[0].etiqueta = "etiqueta 1";
+            gerenciadorCaixa.caixas[0] = new();
+            gerenciadorCaixa.caixas[0].cor = "verde";
+            gerenciadorCaixa.caixas[0].numero = 1;
+            gerenciadorCaixa.caixas[0].etiqueta = "etiqueta 1";
 
-            revistas[0] = new();
-            revistas[0].ano = 2022;
-            revistas[0].disponivel = true;
-            revistas[0].tipoColecao = "tipo1";
-            revistas[0].numeroEdicao = "numeroEdicao1";
-            revistas[0].caixaDaRevista = caixas[0];
+            gerenciadorRevista.revistas[0] = new();
+            gerenciadorRevista.revistas[0].ano = 2022;
+            gerenciadorRevista.revistas[0].disponivel = true;
+            gerenciadorRevista.revistas[0].tipoColecao = "tipo1";
+            gerenciadorRevista.revistas[0].numeroEdicao = "numeroEdicao1";
+            gerenciadorRevista.revistas[0].caixaDaRevista = gerenciadorCaixa.caixas[0];
 
-            pessoas[0] = new();
-            pessoas[0].telefone = "tel1";
-            pessoas[0].endereço = "end1";
-            pessoas[0].nome = "nome1";
-            pessoas[0].nomeResponsavel = "nomeRes1";
+            gerenciadorPessoas.pessoas[0] = new();
+            gerenciadorPessoas.pessoas[0].telefone = "tel1";
+            gerenciadorPessoas.pessoas[0].endereço = "end1";
+            gerenciadorPessoas.pessoas[0].nome = "nome1";
+            gerenciadorPessoas.pessoas[0].nomeResponsavel = "nomeRes1";
 
             #endregion
 
@@ -49,16 +49,16 @@ namespace ClubeDaLeitura.ConsoleApp1
                         switch (menu.MenuSecundarioGeral())
                         {
                             case 1:
-                                funcaoCrude.RegistrarNovaRevista(revistas, caixas, acharPosicao);
+                                funcaoCrude.RegistrarNovaRevista(gerenciadorCaixa, gerenciadorRevista, gerenciadorRevista.revistas, gerenciadorCaixa.caixas, acharPosicao);
                                 break;
                             case 2:
-                                funcaoCrude.Mostrar(revistas);
+                                funcaoCrude.Mostrar(gerenciadorRevista, gerenciadorRevista.revistas);
                                 break;
                             case 3:
-                                funcaoCrude.Excluir(revistas, mensagen);
+                                funcaoCrude.Excluir(gerenciadorRevista, gerenciadorRevista.revistas, mensagen);
                                 break;
                             case 4:
-                                funcaoCrude.EditarRevista(menu, revistas, caixas);
+                                funcaoCrude.EditarRevista(gerenciadorRevista,menu, gerenciadorRevista.revistas, gerenciadorCaixa.caixas);
                                 break;
                             case 5:
                                 break;
@@ -72,16 +72,16 @@ namespace ClubeDaLeitura.ConsoleApp1
                         switch (menu.MenuSecundarioGeral())
                         {
                             case 1:
-                                funcaoCrude.Registrar(caixas, acharPosicao);
+                                funcaoCrude.Registrar(gerenciadorCaixa,gerenciadorCaixa.caixas, acharPosicao);
                                 break;
                             case 2:
-                                funcaoCrude.Mostrar(caixas);
+                                funcaoCrude.Mostrar(gerenciadorCaixa, gerenciadorCaixa.caixas);
                                 break;
                             case 3:
-                                funcaoCrude.Excluir(caixas, mensagen);
+                                funcaoCrude.Excluir(gerenciadorCaixa, gerenciadorCaixa.caixas, mensagen);
                                 break;
                             case 4:
-                                funcaoCrude.Editar(menu, caixas);
+                                funcaoCrude.Editar(gerenciadorCaixa,menu, gerenciadorCaixa.caixas);
                                 break;
                             case 5:
                                 break;
@@ -95,16 +95,16 @@ namespace ClubeDaLeitura.ConsoleApp1
                         switch (menu.MenuSecundarioGeral())
                         {
                             case 1:
-                                funcaoCrude.Registrar(pessoas, acharPosicao);
+                                funcaoCrude.Registrar(gerenciadorPessoas, gerenciadorPessoas.pessoas, acharPosicao);
                                 break;
                             case 2:
-                                funcaoCrude.Mostrar(pessoas);
+                                funcaoCrude.Mostrar(gerenciadorPessoas, gerenciadorPessoas.pessoas);
                                 break;
                             case 3:
-                                funcaoCrude.Excluir(pessoas, mensagen);
+                                funcaoCrude.Excluir(gerenciadorPessoas, gerenciadorPessoas.pessoas, mensagen);
                                 break;
                             case 4:
-                                funcaoCrude.Editar(menu, pessoas);
+                                funcaoCrude.Editar(gerenciadorPessoas,menu, gerenciadorPessoas.pessoas);
                                 break;
                             case 5:
                                 break;
@@ -118,19 +118,19 @@ namespace ClubeDaLeitura.ConsoleApp1
                         switch (menu.MenuSecundarioEmprestimo())
                         {
                             case 1:
-                                funcaoCrude.RegistraEmprestimos(revistas, pessoas, acharPosicao, emprestimos);
+                                funcaoCrude.RegistraEmprestimos(gerenciadorPessoas, gerenciadorRevista, gerenciadorEmprestimo, gerenciadorRevista.revistas, gerenciadorPessoas.pessoas, acharPosicao, gerenciadorEmprestimo.emprestimos);
                                 break;
                             case 2:
-                                funcaoCrude.MostrarEmprestimos(emprestimos, true);
+                                funcaoCrude.MostrarEmprestimos(gerenciadorEmprestimo, gerenciadorEmprestimo.emprestimos, true);
                                 break;
                             case 3:
-                                funcaoCrude.ExcluirEmprestimo(emprestimos, mensagen, pessoas, revistas);
+                                funcaoCrude.ExcluirEmprestimo(gerenciadorEmprestimo,gerenciadorEmprestimo.emprestimos, mensagen, gerenciadorPessoas.pessoas, gerenciadorRevista.revistas);
                                 break;
                             case 4:
-                                funcaoCrude.Editar(menu, emprestimos);
+                                funcaoCrude.EditarEmprestimo(gerenciadorEmprestimo, menu, gerenciadorEmprestimo.emprestimos, gerenciadorPessoas.pessoas, gerenciadorRevista.revistas);
                                 break;
                             case 5:
-                                funcaoCrude.MostrarEmprestimos(emprestimos, false);
+                                funcaoCrude.MostrarEmprestimos(gerenciadorEmprestimo, gerenciadorEmprestimo.emprestimos, false);
                                 break;
                             case 6:
                                 break;
