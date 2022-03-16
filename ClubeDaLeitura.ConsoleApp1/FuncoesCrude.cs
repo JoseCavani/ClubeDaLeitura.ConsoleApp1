@@ -44,7 +44,7 @@ namespace ClubeDaLeitura.ConsoleApp1
             public void Editar(Menu menu, dynamic[] objeto)
             {
                 Mostrar(objeto);
-                int numeroEditar = menu.Editar(objeto);
+                int numeroEditar = menu.EditarQual(objeto);
                 Console.Clear();
                 objeto[numeroEditar].Editar();
             }
@@ -63,7 +63,7 @@ namespace ClubeDaLeitura.ConsoleApp1
             public void EditarRevista(Menu menu, Revista[] revista, Caixa[] caixa)
             {
                 Mostrar(revista);
-                int numeroEditar = menu.Editar(revista);
+                int numeroEditar = menu.EditarQual(revista);
                 Console.Clear();
                 revista[numeroEditar].EditarRevista(caixa);
             }

@@ -61,7 +61,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                 while (!(int.TryParse(Console.ReadLine(), out numero)) || numero > 6 || numero < 0);
                 return numero;
             }
-            public int Editar(dynamic[] objeto)
+            public int EditarQual(dynamic[] objeto)
             {
                 houveErro = false;
                 do
@@ -73,14 +73,14 @@ namespace ClubeDaLeitura.ConsoleApp1
                 } while (!(int.TryParse(Console.ReadLine(), out numeroEditar)) || objeto[numeroEditar] == null);
                 return numeroEditar;
             }
-            public int EditarOQue(string mensagenInformativa, int numeroMaximo)
+            public int EditarOQue(string mensagenDoMenu, int numeroMaximo)
             {
                 houveErro = false;
                 do
                 {
                     if (houveErro == true)
                         mensagen.Erro("ID invalido");
-                    Console.WriteLine(mensagenInformativa);
+                    Console.WriteLine(mensagenDoMenu);
                     houveErro = true;
                 } while (!(int.TryParse(Console.ReadLine(), out numeroEditar)) || numeroEditar > numeroMaximo || numeroEditar <= 0);
                 return numeroEditar;
