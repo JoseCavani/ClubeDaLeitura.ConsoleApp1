@@ -7,7 +7,7 @@ namespace ClubeDaLeitura.ConsoleApp1
         public class FuncoesCrude
         {
            
-            public void MostrarEmprestimos(GerenciadorEmprestimo gerenciadorEmprestimo, Emprestimo[] emprestimos, bool abertos)
+            public void MostrarEmprestimos(GerenciadorEmprestimo gerenciadorEmprestimo, bool abertos)
             {
                 if (abertos)
                 {

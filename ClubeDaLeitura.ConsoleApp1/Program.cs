@@ -121,7 +121,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 funcaoCrude.RegistraEmprestimos(gerenciadorPessoas, gerenciadorRevista, gerenciadorEmprestimo, gerenciadorRevista.revistas, gerenciadorPessoas.pessoas, acharPosicao, gerenciadorEmprestimo.emprestimos);
                                 break;
                             case 2:
-                                funcaoCrude.MostrarEmprestimos(gerenciadorEmprestimo, gerenciadorEmprestimo.emprestimos, true);
+                                funcaoCrude.MostrarEmprestimos(gerenciadorEmprestimo, true);
                                 break;
                             case 3:
                                 funcaoCrude.ExcluirEmprestimo(gerenciadorCaixa, gerenciadorEmprestimo,gerenciadorEmprestimo.emprestimos, mensagen, gerenciadorPessoas.pessoas, gerenciadorRevista.revistas);
@@ -130,7 +130,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 funcaoCrude.EditarEmprestimo(gerenciadorEmprestimo, menu, gerenciadorEmprestimo.emprestimos, gerenciadorPessoas.pessoas, gerenciadorRevista.revistas);
                                 break;
                             case 5:
-                                funcaoCrude.MostrarEmprestimos(gerenciadorEmprestimo, gerenciadorEmprestimo.emprestimos, false);
+                                funcaoCrude.MostrarEmprestimos(gerenciadorEmprestimo, false);
                                 break;
                             case 6:
                                 break;
