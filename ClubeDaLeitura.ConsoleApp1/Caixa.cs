@@ -9,16 +9,21 @@ namespace ClubeDaLeitura.ConsoleApp1
             public int numero;
              int numeroEditar;
             Mensagen mensagen = new();
+            bool houveErro = false;
             public void Registrar()
             {
                 Console.WriteLine("cor");
                     cor = Console.ReadLine();
                 Console.WriteLine("etiqueta");
                     etiqueta = Console.ReadLine();
+                houveErro = false;
                 do
                 {
+                    if (houveErro == true)
+                        mensagen.Erro("numero invalido");
                     Console.WriteLine("numero");
-                }while (!(int.TryParse(Console.ReadLine(), out int numero)));
+                    houveErro = true;
+                } while (!(int.TryParse(Console.ReadLine(), out int numero)));
                 numero = int.Parse(Console.ReadLine());
                 mensagen.Sucesso("caixa registrada com sucesso");
             }

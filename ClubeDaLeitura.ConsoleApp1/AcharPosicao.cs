@@ -4,7 +4,7 @@
     {
         public class AcharPosicao
         {
-            public int AcharPosicaoParaOObjeto(dynamic array)
+            public int AcharPosicaoNulo(dynamic array)
             {
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -14,7 +14,6 @@
                 }
                 return 0;
             }
-          
         }
     }
 }

@@ -12,28 +12,38 @@ namespace ClubeDaLeitura.ConsoleApp1
             public Caixa caixaDaRevista;
             public Mensagen mensagens = new();
             public Menu menu = new();
+            bool houveErro = false;
 
             public void Registar(Caixa[] caixa)
             {
                 disponivel = true;
                 Console.WriteLine("tipo de colecao");
                 tipoColecao = Console.ReadLine();
-
+                Console.Clear();
                 for (int i = 0; i < caixa.Length; i++)
                 {
                     if (caixa[i] == null)
                         continue;
-                    Console.WriteLine($"caixa {caixa[i].numero}, {caixa[i].cor},{caixa[i].etiqueta} = {i}");
+                    Console.WriteLine($"ID : {i}");
+                        caixa[i].Mostrar();
+                    Console.WriteLine();
                 }
-                    do {
+                 houveErro = false;
+                do {
+                    if (houveErro != false)
+                        mensagens.Erro("caixa invalida ou nao existe");
                         Console.WriteLine("qual caixa deseja registrar para essa revista");
+                    houveErro = true;
 
                     } while (!(int.TryParse(Console.ReadLine(), out numeroCaixa))|| caixa[numeroCaixa] == null);
                     caixaDaRevista = caixa[numeroCaixa];
-
+                 houveErro = false;
                 do
                 {
+                    if (houveErro == true)
+                        mensagens.Erro("ano invalido");
                     Console.WriteLine("ano");
+                    houveErro = true;
                 } while (!(int.TryParse(Console.ReadLine(), out ano)));
 
                 Console.WriteLine("numero de edicao");

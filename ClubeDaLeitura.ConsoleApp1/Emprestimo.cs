@@ -12,42 +12,57 @@ namespace ClubeDaLeitura.ConsoleApp1
             public Pessoa amigo;
             int numeroRevista, numeroPessoa, numeroEditar;
             private Mensagen mensagen = new();
+            bool houveErro = false;
 
             public void Registrar(Revista[] revistas,Pessoa[] amigos)
             {
+                houveErro = false;
                 aberto = true;
                 do
                 {
                     Console.Clear();
-                    Console.WriteLine("data do emprestimo");
-                } while (!(DateTime.TryParse(Console.ReadLine(), out  dataEmprestimo)));
 
+                    if (houveErro == true)
+                        mensagen.Erro("data invalida");
+                    Console.WriteLine("data do emprestimo");
+                    houveErro = true;
+                } while (!(DateTime.TryParse(Console.ReadLine(), out  dataEmprestimo)));
+                Console.Clear();
                 for (int i = 0; i < revistas.Length; i++)
                 {
                     if (revistas[i] == null || revistas[i].disponivel == false)
                         continue;
-                    Console.WriteLine($"revista Tipo colecao: ({revistas[i].tipoColecao}, ano: {revistas[i].ano}, numero de edicao {revistas[i].numeroEdicao}) = {i}");
+                    Console.WriteLine($"ID : {i}");
+                    revistas[i].Mostrar();
                 }
+                houveErro = false;
                 do
                 {
+                    if (houveErro == true)
+                        mensagen.Erro("data invalida");
                     Console.WriteLine("qual revista deseja emprestar");
-
+                    houveErro = true;
                 } while (!(int.TryParse(Console.ReadLine(), out numeroRevista)) || revistas[    numeroRevista] == null|| revistas[numeroRevista].disponivel == false);
                 revista = revistas[numeroRevista];
 
 
 
 
-
+                Console.Clear();
                 for (int i = 0; i < amigos.Length; i++)
                 {
                     if (amigos[i] == null)
                         continue;
-                    Console.WriteLine($"revista nome: ({amigos[i].nome}, telefone: {amigos[i].telefone}, endereço {amigos[i].endereço}) = {i}");
+                    Console.WriteLine($"ID : {i}");
+                    amigos[i].Mostrar();
                 }
+                houveErro = false;
                 do
                 {
+                    if (houveErro == true)
+                        mensagen.Erro("data invalida");
                     Console.WriteLine("qual pessoa quer emprestar");
+                    houveErro = true;
 
                 } while (!(int.TryParse(Console.ReadLine(), out numeroPessoa)) || amigos[numeroPessoa] == null || amigos[numeroPessoa].temEmprestimo == true);
                 amigo = amigos[numeroPessoa];

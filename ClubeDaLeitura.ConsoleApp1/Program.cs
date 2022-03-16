@@ -47,22 +47,20 @@ namespace ClubeDaLeitura.ConsoleApp1
                         switch (menu.MenuSecundarioGeral())
                         {
                             case 1:
-                                Console.Clear();
                                 RegistrarNovaRevista(revistas, caixas, acharPosicao);
                                 break;
                             case 2:
-                                Console.Clear();
                                 Mostrar(revistas);
                                 break;
                             case 3:
-                                Console.Clear();
                                 Excluir(revistas, mensagen);
                                 break;
                             case 4:
-                                Console.Clear();
                                 EditarRevista(menu, revistas, caixas);
                                 break;
-                                default:
+                            case 5:
+                                break;
+                            default:
                                 mensagen.Erro("invalido");
                                 break;
                         }
@@ -76,14 +74,15 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 break;
                             case 2:
                                 Mostrar(caixas);
-                                Console.ReadKey();
                                 break;
                             case 3:
                                 Excluir(caixas,mensagen);
                                 break;
                             case 4:
                                 Editar(menu, caixas);
-                                return;
+                                break;
+                            case 5:
+                                break;
                             default:
                                 mensagen.Erro("invalido");
                                 break;
@@ -98,13 +97,14 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 break;
                             case 2:
                                 Mostrar(pessoas);
-                                Console.ReadKey();
                                 break;
                             case 3:
                                 Excluir(pessoas, mensagen);
                                 break;
                             case 4:
                                 Editar(menu, pessoas);
+                                break;
+                            case 5:
                                 break;
                             default:
                                 mensagen.Erro("invalido");
@@ -119,8 +119,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 RegistraEmprestimos(revistas, pessoas, acharPosicao, emprestimos);
                                 break;
                             case 2:
-                                MostrarEmprestimosAbertos(emprestimos,true);
-                                Console.ReadKey();
+                                MostrarEmprestimos(emprestimos,true);
                                 break;
                             case 3:
                                 Excluir(emprestimos, mensagen);
@@ -129,7 +128,9 @@ namespace ClubeDaLeitura.ConsoleApp1
                                Editar(menu, emprestimos);
                                 break;
                             case 5:
-                                MostrarEmprestimosAbertos(emprestimos, false);
+                                MostrarEmprestimos(emprestimos, false);
+                                break;
+                            case 6:
                                 break;
                             default:
                                 mensagen.Erro("invalido");
@@ -145,7 +146,7 @@ namespace ClubeDaLeitura.ConsoleApp1
             }while (true);
         }
 
-        private static void MostrarEmprestimosAbertos(Emprestimo[] emprestimos,bool abertos)
+        private static void MostrarEmprestimos(Emprestimo[] emprestimos,bool abertos)
         {
             if (abertos) {
                 for (int i = 0; i < emprestimos.Length; i++)
@@ -174,7 +175,7 @@ namespace ClubeDaLeitura.ConsoleApp1
 
         private static void RegistraEmprestimos(Revista[] revistas, Pessoa[] pessoas, AcharPosicao acharPosicao, Emprestimo[] emprestimos)
         {
-            int posicao = acharPosicao.AcharPosicaoParaOObjeto(emprestimos);
+            int posicao = acharPosicao.AcharPosicaoNulo(emprestimos);
             emprestimos[posicao] = new Emprestimo();
             emprestimos[posicao].Registrar(revistas, pessoas);
         }
@@ -189,7 +190,7 @@ namespace ClubeDaLeitura.ConsoleApp1
 
         private static void Registrar(dynamic[] objeto, AcharPosicao acharPosicao)
         {
-            int posicao = acharPosicao.AcharPosicaoParaOObjeto(objeto);
+            int posicao = acharPosicao.AcharPosicaoNulo(objeto);
            
                 if (objeto is Caixa[])
                     objeto[posicao] = new Caixa();
@@ -225,7 +226,7 @@ namespace ClubeDaLeitura.ConsoleApp1
 
         private static void RegistrarNovaRevista(Revista[] revista, Caixa[] caixa, AcharPosicao acharPosicao)
         {
-            int posicao = acharPosicao.AcharPosicaoParaOObjeto(revista);
+            int posicao = acharPosicao.AcharPosicaoNulo(revista);
             revista[posicao] = new();
             revista[posicao].Registar(caixa);
         }
