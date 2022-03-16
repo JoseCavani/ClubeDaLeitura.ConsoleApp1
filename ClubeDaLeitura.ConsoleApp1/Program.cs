@@ -53,6 +53,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 break;
                             case 2:
                                 funcaoCrude.Mostrar(gerenciadorRevista);
+                                Console.ReadKey();
                                 break;
                             case 3:
                                 funcaoCrude.Excluir(gerenciadorRevista, gerenciadorRevista.revistas, mensagen);
@@ -76,6 +77,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 break;
                             case 2:
                                 funcaoCrude.Mostrar(gerenciadorCaixa);
+                                Console.ReadKey();
                                 break;
                             case 3:
                                 funcaoCrude.Excluir(gerenciadorCaixa, gerenciadorCaixa.caixas, mensagen);
@@ -99,6 +101,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 break;
                             case 2:
                                 funcaoCrude.Mostrar(gerenciadorPessoas);
+                                Console.ReadKey();
                                 break;
                             case 3:
                                 funcaoCrude.Excluir(gerenciadorPessoas, gerenciadorPessoas.pessoas, mensagen);
@@ -122,6 +125,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 break;
                             case 2:
                                 funcaoCrude.MostrarEmprestimos(gerenciadorEmprestimo, true);
+                                Console.ReadKey();
                                 break;
                             case 3:
                                 funcaoCrude.ExcluirEmprestimo(gerenciadorCaixa, gerenciadorEmprestimo,gerenciadorEmprestimo.emprestimos, mensagen, gerenciadorPessoas.pessoas, gerenciadorRevista.revistas);
@@ -131,6 +135,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 break;
                             case 5:
                                 funcaoCrude.MostrarEmprestimos(gerenciadorEmprestimo, false);
+                                Console.ReadKey();
                                 break;
                             case 6:
                                 break;

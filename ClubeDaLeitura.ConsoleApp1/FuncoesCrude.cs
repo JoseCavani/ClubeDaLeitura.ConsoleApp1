@@ -17,7 +17,6 @@ namespace ClubeDaLeitura.ConsoleApp1
                 {
                         gerenciadorEmprestimo.Mostrar(false);
                 }
-                Console.ReadKey();
             }
 
             public void RegistraEmprestimos(GerenciadorPessoa gerenciadorPessoas, GerenciadorRevista gerenciadorRevista, GerenciadorEmprestimo gerenciadorEmprestimo, Revista[] revistas, Pessoa[] pessoas, AcharPosicao acharPosicao, Emprestimo[] emprestimos)
@@ -131,7 +130,6 @@ namespace ClubeDaLeitura.ConsoleApp1
             public void Mostrar(dynamic gerenciador)
             {
                     gerenciador.Mostrar();
-                Console.ReadKey();
             }
         }
 
