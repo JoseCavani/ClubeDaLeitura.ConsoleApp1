@@ -37,6 +37,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                 } while (!(int.TryParse(Console.ReadLine(), out emprestimos[posicao].numeroRevista)) || revistas[emprestimos[posicao].numeroRevista] == null || revistas[emprestimos[posicao].numeroRevista].disponivel == false);
                  emprestimos[posicao].revista = revistas[emprestimos[posicao].numeroRevista];
                 revistas[emprestimos[posicao].numeroRevista].disponivel = false;
+                revistas[emprestimos[posicao].numeroRevista].caixaDaRevista = default;
 
 
 
@@ -49,11 +50,11 @@ namespace ClubeDaLeitura.ConsoleApp1
                 {
                     Console.WriteLine();
                     if (emprestimos[posicao].houveErro == true)
-                        mensagens.Erro("pessoa ja tem emprestimo ou nao existe");
+                        mensagens.Erro("pessoa ja tem emprestimo/multa ou nao existe");
                     Console.WriteLine("qual pessoa quer emprestar");
                     emprestimos[posicao].houveErro = true;
 
-                } while (!(int.TryParse(Console.ReadLine(), out emprestimos[posicao].numeroPessoa)) || amigos[emprestimos[posicao].numeroPessoa] == null || amigos[emprestimos[posicao].numeroPessoa].temEmprestimo == true);
+                } while (!(int.TryParse(Console.ReadLine(), out emprestimos[posicao].numeroPessoa)) || amigos[emprestimos[posicao].numeroPessoa] == null || amigos[emprestimos[posicao].numeroPessoa].temEmprestimo == true || amigos[emprestimos[posicao].numeroPessoa].multa == true);
                 emprestimos[posicao].amigo = amigos[emprestimos[posicao].numeroPessoa];
                 amigos[emprestimos[posicao].numeroPessoa].temEmprestimo = true;
 
@@ -179,6 +180,34 @@ namespace ClubeDaLeitura.ConsoleApp1
                 }
                 mensagens.Sucesso("registrado com sucesso");
             }
+
+            public void RegistrarComReserva(Pessoa[] amigos,Revista[] revistas, Reserva reserva, int posicao)
+            {
+                emprestimos[posicao].houveErro = false;
+                emprestimos[posicao].aberto = true;
+                do
+                {
+                    Console.Clear();
+
+                    if (emprestimos[posicao].houveErro == true)
+                        mensagens.Erro("data invalida");
+                    Console.WriteLine("data do emprestimo");
+                    emprestimos[posicao].houveErro = true;
+                } while (!(DateTime.TryParse(Console.ReadLine(), out emprestimos[posicao].dataEmprestimo)));
+                Console.Clear();
+
+                emprestimos[posicao].revista = reserva.revista;
+                revistas[emprestimos[posicao].numeroRevista].disponivel = false;
+                revistas[emprestimos[posicao].numeroRevista].caixaDaRevista = default;
+
+
+
+               emprestimos[posicao].amigo = reserva.amigo;
+                amigos[emprestimos[posicao].numeroPessoa].temEmprestimo = true;
+
+                mensagens.Sucesso("registrado com sucesso");
+            }
+
         }
     }
 }

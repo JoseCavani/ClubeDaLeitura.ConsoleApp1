@@ -10,6 +10,7 @@ namespace ClubeDaLeitura.ConsoleApp1
             public Caixa[] caixas = new Caixa[100];
             public void Registrar(int i)
             {
+                caixas[i] = new Caixa();
                 Console.WriteLine("cor");
                 caixas[i].cor = Console.ReadLine();
                 Console.WriteLine("etiqueta");

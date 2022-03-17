@@ -8,6 +8,7 @@
            public int numeroEditar;
             public string telefone, nomeResponsavel, nome, endereço;
             public bool temEmprestimo;
+            public bool multa;
            
         }
     }

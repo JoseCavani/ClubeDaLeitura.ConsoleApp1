@@ -16,6 +16,8 @@ namespace ClubeDaLeitura.ConsoleApp1
             GerenciadorCaixa gerenciadorCaixa = new();
             GerenciadorPessoa gerenciadorPessoas = new();
             GerenciadorEmprestimo gerenciadorEmprestimo = new();
+            GerenciadorReserva gerenciadorReserva = new();
+            GerenciadorCategoria gerenciadorCategoria = new();
             #endregion
 
             #region valores
@@ -24,12 +26,19 @@ namespace ClubeDaLeitura.ConsoleApp1
             gerenciadorCaixa.caixas[0].numero = 1;
             gerenciadorCaixa.caixas[0].etiqueta = "etiqueta 1";
 
+            gerenciadorCategoria.categoria[0] = new();
+            gerenciadorCategoria.categoria[0].nome = "nome1";
+            gerenciadorCategoria.categoria[0].diasEmprestimo = 3;
+
+
+
             gerenciadorRevista.revistas[0] = new();
             gerenciadorRevista.revistas[0].ano = 2022;
             gerenciadorRevista.revistas[0].disponivel = true;
             gerenciadorRevista.revistas[0].tipoColecao = "tipo1";
             gerenciadorRevista.revistas[0].numeroEdicao = "numeroEdicao1";
             gerenciadorRevista.revistas[0].caixaDaRevista = gerenciadorCaixa.caixas[0];
+            gerenciadorRevista.revistas[0].categoria = gerenciadorCategoria.categoria[0];
 
             gerenciadorPessoas.pessoas[0] = new();
             gerenciadorPessoas.pessoas[0].telefone = "tel1";
@@ -42,14 +51,24 @@ namespace ClubeDaLeitura.ConsoleApp1
             do
             {
                 Console.Clear();
-                switch (menu.MenuPrincipal())
+                switch (menu.Menus("1 = Revista\n" +
+                        "2 = Caixa\n" +
+                        "3 = Pessoas\n" +
+                        "4 = Emprestimos\n" +
+                        "5 = Reservas\n" +
+                        "6 = Categoria\n" +
+                        "7 = sair",7))
                 {
                     case 1:
                         Console.Clear();
-                        switch (menu.MenuSecundarioGeral())
+                        switch (menu.Menus("1 = Registrar\n" +
+                        "2 = Mostrar \n" +
+                        "3 = Excluir \n" +
+                        "4 = Editar \n" +
+                        "5 = voltar\n", 5))
                         {
                             case 1:
-                                funcaoCrude.RegistrarNovaRevista(gerenciadorCaixa, gerenciadorRevista, gerenciadorRevista.revistas, gerenciadorCaixa.caixas, acharPosicao);
+                                funcaoCrude.RegistrarNovaRevista(gerenciadorCategoria,gerenciadorCaixa, gerenciadorRevista, gerenciadorRevista.revistas, gerenciadorCaixa.caixas, acharPosicao);
                                 break;
                             case 2:
                                 funcaoCrude.Mostrar(gerenciadorRevista);
@@ -59,7 +78,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 funcaoCrude.Excluir(gerenciadorRevista, gerenciadorRevista.revistas, mensagen);
                                 break;
                             case 4:
-                                funcaoCrude.EditarRevista(gerenciadorRevista,menu, gerenciadorRevista.revistas, gerenciadorCaixa.caixas);
+                                funcaoCrude.EditarRevista(gerenciadorCategoria, gerenciadorRevista, menu, gerenciadorRevista.revistas, gerenciadorCaixa.caixas);
                                 break;
                             case 5:
                                 break;
@@ -70,10 +89,14 @@ namespace ClubeDaLeitura.ConsoleApp1
                         break;
                     case 2:
                         Console.Clear();
-                        switch (menu.MenuSecundarioGeral())
+                        switch (menu.Menus("1 = Registrar\n" +
+                        "2 = Mostrar \n" +
+                        "3 = Excluir \n" +
+                        "4 = Editar \n" +
+                        "5 = voltar\n", 5))
                         {
                             case 1:
-                                funcaoCrude.Registrar(gerenciadorCaixa,gerenciadorCaixa.caixas, acharPosicao);
+                                funcaoCrude.Registrar(gerenciadorCaixa, gerenciadorCaixa.caixas, acharPosicao);
                                 break;
                             case 2:
                                 funcaoCrude.Mostrar(gerenciadorCaixa);
@@ -83,7 +106,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 funcaoCrude.Excluir(gerenciadorCaixa, gerenciadorCaixa.caixas, mensagen);
                                 break;
                             case 4:
-                                funcaoCrude.Editar(gerenciadorCaixa,menu, gerenciadorCaixa.caixas);
+                                funcaoCrude.Editar(gerenciadorCaixa, menu, gerenciadorCaixa.caixas);
                                 break;
                             case 5:
                                 break;
@@ -94,7 +117,12 @@ namespace ClubeDaLeitura.ConsoleApp1
                         break;
                     case 3:
                         Console.Clear();
-                        switch (menu.MenuSecundarioGeral())
+                        switch (menu.Menus("1 = Registrar\n" +
+                        "2 = Mostrar \n" +
+                        "3 = Excluir \n" +
+                        "4 = Editar \n" +
+                        "5 = quitar multa\n" +
+                        "6 = voltar",5))
                         {
                             case 1:
                                 funcaoCrude.Registrar(gerenciadorPessoas, gerenciadorPessoas.pessoas, acharPosicao);
@@ -107,9 +135,12 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 funcaoCrude.Excluir(gerenciadorPessoas, gerenciadorPessoas.pessoas, mensagen);
                                 break;
                             case 4:
-                                funcaoCrude.Editar(gerenciadorPessoas,menu, gerenciadorPessoas.pessoas);
+                                funcaoCrude.Editar(gerenciadorPessoas, menu, gerenciadorPessoas.pessoas);
                                 break;
                             case 5:
+                                funcaoCrude.QuitarMulta(gerenciadorPessoas);
+                                break;
+                            case 6:
                                 break;
                             default:
                                 mensagen.Erro("invalido");
@@ -118,7 +149,12 @@ namespace ClubeDaLeitura.ConsoleApp1
                         break;
                     case 4:
                         Console.Clear();
-                        switch (menu.MenuSecundarioEmprestimo())
+                        switch (menu.Menus("1 = Registrar\n" +
+                        "2 = Mostrar emprestimos abertos \n" +
+                        "3 = Fechar \n" +
+                        "4 = Editar \n" +
+                        "5 = Mostrar emprestimos do mes\n" +
+                        "6 = voltar\n",6))
                         {
                             case 1:
                                 funcaoCrude.RegistraEmprestimos(gerenciadorPessoas, gerenciadorRevista, gerenciadorEmprestimo, gerenciadorRevista.revistas, gerenciadorPessoas.pessoas, acharPosicao, gerenciadorEmprestimo.emprestimos);
@@ -128,7 +164,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                                 Console.ReadKey();
                                 break;
                             case 3:
-                                funcaoCrude.ExcluirEmprestimo(gerenciadorCaixa, gerenciadorEmprestimo,gerenciadorEmprestimo.emprestimos, mensagen, gerenciadorPessoas.pessoas, gerenciadorRevista.revistas);
+                                funcaoCrude.FecharEmprestimo(gerenciadorCaixa, gerenciadorEmprestimo, gerenciadorEmprestimo.emprestimos, mensagen, gerenciadorPessoas.pessoas, gerenciadorRevista.revistas);
                                 break;
                             case 4:
                                 funcaoCrude.EditarEmprestimo(gerenciadorEmprestimo, menu, gerenciadorEmprestimo.emprestimos, gerenciadorPessoas.pessoas, gerenciadorRevista.revistas);
@@ -145,6 +181,64 @@ namespace ClubeDaLeitura.ConsoleApp1
                         }
                         break;
                     case 5:
+                        Console.Clear();
+                        switch (menu.Menus("1 = Registrar\n" +
+                        "2 = Mostrar \n" +
+                        "3 = Excluir \n" +
+                        "4 = Editar \n" +
+                        "5 = Novo emprestimo\n" +
+                        "6 = voltar",6))
+                        {
+                            case 1:
+                                funcaoCrude.RegistrarReserva(gerenciadorReserva, gerenciadorReserva.reserva, acharPosicao, gerenciadorPessoas, gerenciadorRevista);
+                                break;
+                            case 2:
+                                funcaoCrude.Mostrar(gerenciadorReserva);
+                                break;
+                            case 3:
+                                funcaoCrude.ExcluirReserva(gerenciadorRevista, gerenciadorReserva, gerenciadorPessoas);
+                                break;
+                            case 4:
+                                funcaoCrude.EditarReserva(gerenciadorReserva, menu, gerenciadorReserva.reserva, gerenciadorPessoas, gerenciadorRevista);
+                                break;
+                            case 5:
+                                funcaoCrude.NovoEmprestimoComReserva(gerenciadorEmprestimo, gerenciadorPessoas.pessoas, gerenciadorRevista.revistas, gerenciadorReserva);
+                                break;
+                            case 6:
+                                break;
+                            default:
+                                mensagen.Erro("invalido");
+                                break;
+                        }
+                        break;
+                    case 6:
+                        Console.Clear();
+                        switch (menu.Menus("1 = Registrar\n" +
+                        "2 = Mostrar \n" +
+                        "3 = Excluir \n" +
+                        "4 = Editar \n" +
+                        "5 = voltar\n", 5))
+                        {
+                            case 1:
+                                funcaoCrude.Registrar(gerenciadorCategoria, gerenciadorCategoria.categoria, acharPosicao);
+                                break;
+                            case 2:
+                                funcaoCrude.Mostrar(gerenciadorCategoria);
+                                break;
+                            case 3:
+                                funcaoCrude.Excluir(gerenciadorCategoria, gerenciadorCategoria.categoria, mensagen);
+                                break;
+                            case 4:
+                                funcaoCrude.Editar(gerenciadorCategoria, menu, gerenciadorCategoria.categoria);
+                                break;
+                            case 5:
+                                break;
+                                 default:
+                                mensagen.Erro("invalido");
+                                break;
+                        }
+                        break;
+                    case 7:
                         return;
                     default:
                         mensagen.Erro("invalido");

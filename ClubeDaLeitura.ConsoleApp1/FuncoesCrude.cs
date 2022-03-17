@@ -18,24 +18,47 @@ namespace ClubeDaLeitura.ConsoleApp1
                 }
             }
 
+            public void QuitarMulta(GerenciadorPessoa gerenciadorPessoas)
+            {
+                Menu menu = new Menu();
+                Mensagen mensagen = new();
+                bool naohaMulta = false;
+                foreach (var item in gerenciadorPessoas.pessoas)
+                {
+                    if (item == null)
+                        continue;
+                    if (item.multa)
+                     naohaMulta = true;
+                }
+                if (naohaMulta)
+                {
+                    mensagen.Erro("nao ha multas");
+                    Console.ReadKey();
+                        return;
+                }
+                Mostrar(gerenciadorPessoas);
+              int id =  menu.PegaID(gerenciadorPessoas.pessoas);
+                gerenciadorPessoas.pessoas[id].multa = false;
+                mensagen.Sucesso("multa quitado");
+                Console.ReadKey();
+            }
             public void RegistraEmprestimos(GerenciadorPessoa gerenciadorPessoas, GerenciadorRevista gerenciadorRevista, GerenciadorEmprestimo gerenciadorEmprestimo, Revista[] revistas, Pessoa[] pessoas, AcharPosicao acharPosicao, Emprestimo[] emprestimos)
             {
-                Mensagen mensagen = new();
-                 bool haRevistas = false;
-                foreach (var item in revistas)
-                {
-                    if (item != null && item.disponivel == true)
-                    {
-                        haRevistas = true;
-                        break;
-                    }
-                }
-                if (haRevistas == false)
-                {
-                    mensagen.Erro("não ha revistas disponiveis");
-                    return;
-                }
+                bool tudoCerto;
 
+                tudoCerto = VerSeHaPessoasERevistas(revistas, pessoas);
+
+                if (tudoCerto == false)
+                    return;
+
+                int posicao = acharPosicao.AcharPosicaoNulo(emprestimos);
+                emprestimos[posicao] = new Emprestimo();
+                gerenciadorEmprestimo.Registrar(gerenciadorPessoas, gerenciadorRevista, revistas, pessoas, posicao);
+            }
+
+            public bool VerSeHaPessoasERevistas(Revista[] revistas, Pessoa[] pessoas)
+            {
+                Mensagen mensagen = new();
                 bool haPessoas = false;
                 foreach (var item in pessoas)
                 {
@@ -48,14 +71,24 @@ namespace ClubeDaLeitura.ConsoleApp1
                 if (haPessoas == false)
                 {
                     mensagen.Erro("não ha pessoas para emprestar disponiveis");
-                    return;
+                    return false;
                 }
 
-
-
-                int posicao = acharPosicao.AcharPosicaoNulo(emprestimos);
-                emprestimos[posicao] = new Emprestimo();
-                gerenciadorEmprestimo.Registrar(gerenciadorPessoas, gerenciadorRevista, revistas, pessoas, posicao);
+                bool haRevistas = false;
+                foreach (var item in revistas)
+                {
+                    if (item != null && item.disponivel == true)
+                    {
+                        haRevistas = true;
+                        break;
+                    }
+                }
+                if (haRevistas == false)
+                {
+                    mensagen.Erro("não ha revistas disponiveis");
+                    return false;
+                }
+                return true;
             }
 
             public void Editar(dynamic gerenciador,Menu menu, dynamic[] objeto)
@@ -77,7 +110,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                 }
 
                 Mostrar(gerenciador);
-                int numeroEditar = menu.EditarQual(objeto);
+                int numeroEditar = menu.PegaID(objeto);
                 Console.Clear();
                 gerenciador.Editar(numeroEditar);
             }
@@ -100,7 +133,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                 }
 
                 Mostrar(gerenciador);
-                int numeroEditar = menu.EditarQual(objeto);
+                int numeroEditar = menu.PegaID(objeto);
                 Console.Clear();
                 gerenciador.Editar(numeroEditar, revista, pessoas);
             }
@@ -109,14 +142,49 @@ namespace ClubeDaLeitura.ConsoleApp1
             {
                 int posicao = acharPosicao.AcharPosicaoNulo(objeto);
 
-                if (objeto is Caixa[])
-                    objeto[posicao] = new Caixa();
-                else if (objeto is Pessoa[])
-                    objeto[posicao] = new Pessoa();
                 gerenciador.Registrar(posicao);
             }
+            public void RegistrarReserva(dynamic gerenciador, dynamic[] objeto, AcharPosicao acharPosicao, GerenciadorPessoa gerenciadorPessoas, GerenciadorRevista gerenciadorRevista)
+            {
+                bool tudoCerto;
 
-            public void EditarRevista(GerenciadorRevista gerenciadorRevista, Menu menu, Revista[] revista, Caixa[] caixa)
+                tudoCerto = VerSeHaPessoasERevistas (gerenciadorRevista.revistas, gerenciadorPessoas.pessoas);
+
+                if (tudoCerto == false)
+                    return;
+
+                int posicao = acharPosicao.AcharPosicaoNulo(objeto);
+
+                gerenciador.Registrar(posicao, gerenciadorPessoas, gerenciadorRevista);
+            }
+            public void EditarReserva(GerenciadorReserva gerenciadorReserva, Menu menu, dynamic[] objeto, GerenciadorPessoa gerenciadorPessoa, GerenciadorRevista gerenciadorRevista)
+            {
+                Mensagen mensagen = new();
+                bool haObjetos = false;
+
+                foreach (var item in objeto)
+                {
+                    if (item != null)
+                    {
+                        haObjetos = true;
+                        break;
+                    }
+                }
+                if (haObjetos == false)
+                {
+                    mensagen.Erro("não ha nada para editar");
+                    return;
+                }
+
+
+                Mostrar(gerenciadorReserva);
+                int numeroEditar = menu.PegaID(objeto);
+
+               
+                Console.Clear();
+                gerenciadorReserva.Editar(gerenciadorPessoa, gerenciadorRevista, numeroEditar);
+            }
+            public void EditarRevista(GerenciadorCategoria gerenciadorCategoria,GerenciadorRevista gerenciadorRevista, Menu menu, Revista[] revista, Caixa[] caixa)
             {
 
                 Mensagen mensagen = new();
@@ -152,16 +220,16 @@ namespace ClubeDaLeitura.ConsoleApp1
 
 
                 Mostrar(gerenciadorRevista);
-                int numeroEditar = menu.EditarQual(revista);
+                int numeroEditar = menu.PegaID(revista);
                 Console.Clear();
-                gerenciadorRevista.EditarRevista(caixa,numeroEditar);
+                gerenciadorRevista.EditarRevista(gerenciadorCategoria, caixa,numeroEditar);
             }
-            public void ExcluirEmprestimo(GerenciadorCaixa gerenciadorCaixa, GerenciadorEmprestimo gerenciadorEmprestimo, Emprestimo[] emprestimo, Mensagen mensagen, Pessoa[] pessoas, Revista[] revistas)
+            public void FecharEmprestimo(GerenciadorCaixa gerenciadorCaixa, GerenciadorEmprestimo gerenciadorEmprestimo, Emprestimo[] emprestimo, Mensagen mensagen, Pessoa[] pessoas, Revista[] revistas)
             {
                 bool haEmprestimos = false;
                 foreach (var item in emprestimo)
                 {
-                    if(emprestimo != null)
+                    if(item != null)
                     {
                         haEmprestimos = true;
                         break;
@@ -176,11 +244,20 @@ namespace ClubeDaLeitura.ConsoleApp1
                 bool houveErro = false;
                 Mensagen mensagens = new Mensagen();
                 int posicao;
-                Mostrar(gerenciadorEmprestimo);
-                int posicaoExluir = mensagen.Excluir(emprestimo, "qual o ID que deseja excluir");
+                MostrarEmprestimos(gerenciadorEmprestimo,false);
+                int posicaoExluir = mensagen.Excluir(emprestimo, "qual o ID que deseja fechar");
 
                 emprestimo[posicaoExluir].aberto = false;
-                emprestimo[posicaoExluir].dataDevolucao = DateTime.Now;
+
+                do
+                {
+                    if (houveErro == true)
+                        mensagens.Erro("data invalida");
+                    Console.WriteLine("data de devolução");
+                    houveErro = true;
+                } while (!(DateTime.TryParse(Console.ReadLine(), out emprestimo[posicaoExluir].dataDevolucao)));
+
+                TimeSpan dias =  emprestimo[posicaoExluir].dataDevolucao - DateTime.Today;
                 foreach (var item in pessoas)
                 {
                     if (item == null)
@@ -188,12 +265,16 @@ namespace ClubeDaLeitura.ConsoleApp1
                     if (item.nome == emprestimo[posicaoExluir].amigo.nome)
                     {
                         item.temEmprestimo = false;
+                        if (dias.Days > emprestimo[posicaoExluir].revista.categoria.diasEmprestimo)
+                        {
+                            mensagen.Erro("devolvido com multa");
+                            item.multa = true;
+                        }
                         break;
                     }
                 }
-
+                houveErro = false;
                 Console.Clear();
-
                 Mostrar(gerenciadorCaixa);
                 do
                 {
@@ -216,6 +297,8 @@ namespace ClubeDaLeitura.ConsoleApp1
                         break;
                     }
                 }
+
+               
                 mensagen.Sucesso("fechado com sucesso");
                 Console.Clear();
 
@@ -247,8 +330,57 @@ namespace ClubeDaLeitura.ConsoleApp1
 
                 Console.ReadKey();
             }
+            public void ExcluirReserva(GerenciadorRevista gerenciadorRevista, GerenciadorReserva gerenciadorReserva,GerenciadorPessoa gerenciadorPessoa)
+            {
+                Mensagen mensagen = new();
+                    bool haReserva = false;
+                foreach (var item in gerenciadorReserva.reserva)
+                {
+                    if (item != null)
+                    {
+                        haReserva = true;
+                        break;
+                    }
+                }
+                if (haReserva == false)
+                {
+                    mensagen.Erro("não ha reservas");
+                    return;
+                }
 
-            public void RegistrarNovaRevista(GerenciadorCaixa gerenciadorCaixa, GerenciadorRevista gerenciadorRevista, Revista[] revista, Caixa[] caixa, AcharPosicao acharPosicao)
+                Mensagen mensagens = new Mensagen();
+                Mostrar(gerenciadorReserva);
+                int posicaoExluir = mensagen.Excluir(gerenciadorReserva.reserva, "qual o ID que deseja excluir");
+
+                gerenciadorReserva.reserva[posicaoExluir] = default;
+                foreach (var item in gerenciadorPessoa.pessoas)
+                {
+                    if (item == null)
+                        continue;
+                    if (item.nome == gerenciadorReserva.reserva[posicaoExluir].amigo.nome)
+                    {
+                        item.temEmprestimo = false;
+                        break;
+                    }
+                }
+
+                Console.Clear();
+
+                foreach (var item in gerenciadorRevista.revistas)
+                {
+                    if (item == null)
+                        continue;
+                    if (item.numeroEdicao == gerenciadorRevista.revistas[posicaoExluir].numeroEdicao)
+                    {
+                        item.disponivel = true;
+                        break;
+                    }
+                }
+                mensagen.Sucesso("fechado com sucesso");
+                Console.Clear();
+            }
+
+            public void RegistrarNovaRevista(GerenciadorCategoria gerenciadorCategoria, GerenciadorCaixa gerenciadorCaixa, GerenciadorRevista gerenciadorRevista, Revista[] revista, Caixa[] caixa, AcharPosicao acharPosicao)
             {
                 Mensagen mensagen = new();
                
@@ -273,12 +405,24 @@ namespace ClubeDaLeitura.ConsoleApp1
 
                 int posicao = acharPosicao.AcharPosicaoNulo(revista);
                 revista[posicao] = new();
-                gerenciadorRevista.Registar(gerenciadorCaixa, posicao, caixa);
+                gerenciadorRevista.Registar(gerenciadorCategoria,gerenciadorCaixa, posicao, caixa);
             }
 
             public void Mostrar(dynamic gerenciador)
             {
                     gerenciador.Mostrar();
+            }
+            public void NovoEmprestimoComReserva(GerenciadorEmprestimo gerenciadorEmprestimo,Pessoa[] amigos, Revista[] revistas, GerenciadorReserva gerenciadorReserva)
+            {
+                AcharPosicao acharPosicao = new();
+                Menu menu = new();
+                int posicao = acharPosicao.AcharPosicaoNulo(gerenciadorEmprestimo.emprestimos);
+
+                gerenciadorReserva.Mostrar();
+               int ID = menu.PegaID(gerenciadorReserva.reserva);
+
+                gerenciadorEmprestimo.emprestimos[posicao] = new Emprestimo();
+                gerenciadorEmprestimo.RegistrarComReserva(amigos, revistas, gerenciadorReserva.reserva[ID],posicao);
             }
         }
 

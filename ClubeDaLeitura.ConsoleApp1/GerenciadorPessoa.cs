@@ -10,6 +10,7 @@ namespace ClubeDaLeitura.ConsoleApp1
            public Pessoa[] pessoas = new Pessoa[100];
             public void Registrar(int i)
             {
+                pessoas[i] = new Pessoa();
                 Console.WriteLine("telefone");
                 pessoas[i].telefone = Console.ReadLine();
                 Console.WriteLine("nome do responsavel");
@@ -20,10 +21,11 @@ namespace ClubeDaLeitura.ConsoleApp1
                 pessoas[i].endereço = Console.ReadLine();
                 mensagen.Sucesso("pessoa registrada com sucesso");
             }
+         
             public void Mostrar()
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} | {4,0} | {5,0} ","ID".PadRight(3,' '), "telefone".PadRight(20, ' '), "nome do responsavel".PadRight(20, ' '), "nome".PadRight(20, ' '), "endereço".PadRight(20, ' '), "tem emprestimo?");
+                Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} | {4,0} | {5,0} | {6,0}", "ID".PadRight(3,' '), "telefone".PadRight(10, ' '), "nome do responsavel".PadRight(20, ' '), "nome".PadRight(10, ' '), "endereço".PadRight(20, ' '), "tem emprestimo?".PadRight(20, ' '),"tem multa?");
 
                 Console.WriteLine("-------------------------------------------------------------------------------------------------------------------");
 
@@ -33,7 +35,7 @@ namespace ClubeDaLeitura.ConsoleApp1
                 {
                     if (pessoas[i] == null)
                         continue;
-                    Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} | {4,0} | {5,0} ",i.ToString().PadRight(3,' '), pessoas[i].telefone.PadRight(20, ' '), pessoas[i].nomeResponsavel.PadRight(20, ' '), pessoas[i].nome.PadRight(20, ' '), pessoas[i].endereço.PadRight(20, ' '), pessoas[i].temEmprestimo);
+                    Console.WriteLine("{0,0} | {1,0} | {2,0} | {3,0} | {4,0} | {5,0} | {6,0} ", i.ToString().PadRight(3,' '), pessoas[i].telefone.PadRight(10, ' '), pessoas[i].nomeResponsavel.PadRight(20, ' '), pessoas[i].nome.PadRight(10, ' '), pessoas[i].endereço.PadRight(20, ' '), pessoas[i].temEmprestimo.ToString().PadRight(20, ' '), pessoas[i].multa);
                     Console.WriteLine();
                 }
             }
